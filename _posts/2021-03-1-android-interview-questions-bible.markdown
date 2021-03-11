@@ -7,8 +7,13 @@ categories: OOP
 
 # Android Platform
 
-#### What is Android?
+#### What is Android? 
+
+[expand]
+
 Android is a open source software stack created for a wide range of devices.
+
+[/expand]
 
 #### How Does Android's Software Architecture look like?
 ![Software Stack](/assets/android-interview/a-stack.png)

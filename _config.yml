@@ -22,7 +22,7 @@ title: Ivo Ganev | ivo.ganev.github.io
 
 email: ivo.ganev@yahoo.com
 description: >- # this means to ignore newlines until "baseurl:"
-  'Scientist investigate that which already is; Engineers create that which has never been.' Albert Einstein
+  'Logic will get you from A to Z; imagination will get you everywhere.' - Albert Einstein
 baseurl: "/" # the subpath of your site, e.g. /blog
 url: "https://ivoganev.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
 # twitter_username: jekyllrb

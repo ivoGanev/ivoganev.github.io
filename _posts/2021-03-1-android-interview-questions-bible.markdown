@@ -15,10 +15,22 @@ Android is a open source software stack created for a wide range of devices.
 
 [/expand]
 
+
 #### How Does Android's Software Architecture look like?
+
+[expand]
+
+Hello
+
+
+
 ![Software Stack](/assets/android-interview/a-stack.png)
 
+[/expand]
+
+
 #### What Are Some of The Android SDK Tools?
+[expand]
 
 ##### Android NDK
 
@@ -48,6 +60,8 @@ AAPT2 supports faster compilation of resources by enabling incremental compilati
 - Link: merges all compiled files and packages them to a single package.
 
 This division helps improve performance for incremental builds. For example, if there are changes in a single file, you need to recompile only that file.
+
+[/expand]
 
 #### What is the Java API framework in Android?
 Its an API written in Java which consists of:

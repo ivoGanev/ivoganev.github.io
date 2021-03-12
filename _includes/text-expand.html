@@ -1,18 +1,42 @@
 <script>
-    
+
     var elements = document.querySelectorAll('p');
-    Array.prototype.forEach.call(elements, function(el, i){
-        if(el.innerHTML=='[expand]') {
-            var parentContent = el.parentNode.innerHTML.replace('<p>[expand]</p>','<div class="expand" style="display: none; height: 0; overflow: hidden;"> ').replace('<p>[/expand]</p>','<a href ="#" onclick="this.parentNode.style.display = \'none\'; this.parentNode.previousElementSibling.lastElementChild.style.display= \'inline\';">Hide</a></div>');
-            el.parentNode.innerHTML = parentContent;
+    var replacementContent
+
+    elements.forEach(element => {
+        if (element.innerHTML == '[expand]') {
+            var siblings = []
+            var next = element.nextElementSibling
+            if (next != null) {
+                siblings.push(next)
+
+                while (true) {
+                    next = next.nextElementSibling
+                    if (next == null)
+                        break
+                    if (next.innerHTML === '[/expand]') {
+                        next.remove()
+                        break
+                    }
+                    siblings.push(next)
+                }
+            }
+            var content = '<div class="expand" style="display: none; height: 0; overflow: hidden;">' +
+                siblings.map(x=> x.outerHTML).join('') +
+                '<a href ="#!" onclick="this.parentNode.style.display = \'none\'; this.parentNode.previousElementSibling.lastElementChild.style.display= \'inline\';">Hide</a>' +
+                '</div>'
+
+            console.log(siblings.map(x=> x.outerHTML))
+
+            element.outerHTML = content
+           siblings.forEach(sibling => sibling.remove())
         }
-    });
+    })
 
     var elements = document.querySelectorAll('div.expand');
 
-    Array.prototype.forEach.call(elements, function(el, i){
-        el.previousElementSibling.innerHTML = el.previousElementSibling.innerHTML + 
-        '<span>..&nbsp; <a href="#" style="cursor: pointer;" onclick="this.parentNode.parentNode.nextElementSibling.style.display = \'block\'; this.parentNode.parentNode.nextElementSibling.style.height = \'auto\'; this.parentNode.style.display = \'none\';">read&nbsp;more&nbsp;&rarr;</a></span>';
+    elements.forEach(element => {
+        element.previousElementSibling.innerHTML = element.previousElementSibling.innerHTML +
+            '<span>..&nbsp; <a href="#!" style="cursor: pointer;" onclick="this.parentNode.parentNode.nextElementSibling.style.display = \'block\'; this.parentNode.parentNode.nextElementSibling.style.height = \'auto\'; this.parentNode.style.display = \'none\';">read&nbsp;more&nbsp;&rarr;</a></span>';
     });
-
 </script>

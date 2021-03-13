@@ -5,32 +5,18 @@ date:   2021-03-1 16:25:08 +0000
 categories: OOP
 ---
 
-# Android Platform
+## Android Platform
 
 #### What is Android? 
 
-[expand]
-
-Android is a open source software stack created for a wide range of devices.
-
-[/expand]
-
+Android is a mobile operating system based on a modified version of the Linux kernel and other open source software, designed primarily for touchscreen mobile devices such as smartphones and tablets.
 
 #### How Does Android's Software Architecture look like?
 
-[expand]
-
-Hello
-
-
-
 ![Software Stack](/assets/android-interview/a-stack.png)
 
-[/expand]
-
-
 #### What Are Some of The Android SDK Tools?
-[expand]
+
 
 ##### Android NDK
 
@@ -60,8 +46,6 @@ AAPT2 supports faster compilation of resources by enabling incremental compilati
 - Link: merges all compiled files and packages them to a single package.
 
 This division helps improve performance for incremental builds. For example, if there are changes in a single file, you need to recompile only that file.
-
-[/expand]
 
 #### What is the Java API framework in Android?
 Its an API written in Java which consists of:
@@ -106,17 +90,17 @@ To avoid:
 
 You can remember them as CSR(Caesar), PSD(The Photoshop file format)
 
-- onCreate() - Called when the activity is created. Used for static set up: create views, bind data to lists, etc. Provides wth Bundle containing the activity's previously frozen state, if there was one.
+- `onCreate()` - Called when the activity is created. Used for static set up: create views, bind data to lists, etc. Provides wth Bundle containing the activity's previously frozen state, if there was one.
 
-- onStart() - Called after your activity has been stopped, prior to it being started again.
+- `onStart()` - Called after your activity has been stopped, prior to it being started again.
 
-- onResume() - When activity becomes visible to the user.
+- `onResume()` - When activity becomes visible to the user.
 
-- onPause() - When the activity starts interacting with the user. 
+- `onPause()` - When the activity starts interacting with the user. 
 
-- onStop() - Activity is no longer visible to the user. This may occur, for example, when a newly launched activity covers the entire screen. 
+- `onStop()` - Activity is no longer visible to the user. This may occur, for example, when a newly launched activity covers the entire screen. 
 
-- onDestroy() - Called when the user exits the app, `finish()` is invoked, or configuration change (such as device rotation)
+- `onDestroy()` - Called when the user exits the app, `finish()` is invoked, or configuration change (such as device rotation)
 
 #### How does the Android OS decides when to kill an activity?
 
@@ -196,15 +180,16 @@ Then launching C again would produce: A ⏴B ⏴C onNewIntent().
 - Activity is always the root of the task
 - If an instance of the activity already exists the system will call `onNewIntent()` callback and won't create a new instance.
 
+1. We launch 'C' with `FLAG_ACTIVITY_NEW_TASK`
 Example:
 
-- Task 1: A:singleTask⏴B ⏴launch(C'NEW_TASK')
+- Task 1: (A, singleTask)⏴B 
 - Task 2: C
 
-Now if we launch A from C:
+2. Now if we launch A from C:
 
-- Task 2:C
 - Task 1:A ⏴[B gets destroyed]
+- Task 2:C
 
 #### What is a Service?
 A Service is a component that can perform long-running operations in the background of Android OS. It does not provide a user interface. 
@@ -258,5 +243,38 @@ A URI is used to identify the data in the provider.
 - The URI's authority is used to name the provider in order to prevent name clashes with other system providers. You would use the app package name in reverse like `com.myCompany.myApp.provider.MyContentProvider`
 - The URI path is used to point the table
 
+#### What does resource externalization bring?
 
+By externalizing resources you make them easier to maintain, update, and manage. This also lets you easily define alternative resource values to support different hardware and internationalization.
 
+## Optimizations
+
+#### What image format can you use to reduce apk size?
+
+WebP is the preferred image format for Android apps and is lossless and lossy which means it supports both types of compression, unlike PNG's and JPG's.
+
+Lossy compression permanently removes data.
+
+Lossless compression means that as the file size is compressed, the picture quality remains the same - it does not get worse.
+
+## Build Configuration
+
+#### What does minSdkVersion do? 
+
+It is the earliest release of the Android SDK that your application can run on. Usually this is because of a problem with the earlier APIs, lacking functionality, or some other behavioral issue.
+
+#### What does targetSdkVersion do? 
+
+The targetSdkVersion is tells the OS that you have tested your app on the version you have specified. This is the way to tell the Android OS that your app is forward compatible with new OS features or changes. 
+
+ Let's say your targetSDKVersion is 22 and you have set a permission in AndroidManifest.xml to allow phone calls. In API 23, runtime permissions were introduced which requires you to request for dangerous permission,such as calling a phone, at runtime. If a user with a phone using API 23 runs your app and tries to call someone there will be no problem; but if you change later your targetSDKVersion to 23 and the user tries to call someone again and you haven't checked for a runtime permission your app will crash.
+
+#### What does compileSdkVersion do? 
+
+When you write code for Android in your IDE you have access to any SDK by just downloading it. To make sure you are not using any API from an SDK that is not available for your phone targets, warnings and errors are issued so that you are able to fix those problems.
+
+#### What is the recommended recipe for defining sdk versions? 
+
+minSdkVersion <= targetSdkVersion <= compileSdkVersion
+
+https://en.wikipedia.org/wiki/Android_(operating_system)

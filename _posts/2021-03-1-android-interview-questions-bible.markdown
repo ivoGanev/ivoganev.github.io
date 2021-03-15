@@ -5,11 +5,27 @@ date:   2021-03-1 16:25:08 +0000
 categories: OOP
 ---
 
+##### What is it?
+---
+This project is created to ask the most fundamental questions that you should, in my opinion, know for Android and could be a good source to brush up your skills before an interview as opposed to browsing through the massive Android developer guide. 
+
+However, the Android developer guide remains the main origin of the information provided here and if something doesn't add up you should go and read the full documentation.
+
+##### Future plans
+---
+
+I am planning to create another html version where all the answers are hidden so you can practice without viewing the material.
+
 ## Android Platform
 
 #### What is Android? 
 
 Android is a mobile operating system based on a modified version of the Linux kernel and other open source software, designed primarily for touchscreen mobile devices such as smartphones and tablets.
+
+
+[Wikipedia](https://en.wikipedia.org/wiki/Android_(operating_system)){: .post.a }{:target="_blank"}
+
+
 
 #### How Does Android's Software Architecture look like?
 
@@ -267,6 +283,8 @@ It is the earliest release of the Android SDK that your application can run on. 
 
 The targetSdkVersion tells the OS that you have tested your app up until the version you have specified and make it forward compatible.
 
+Example:
+
 Let's say your targetSDKVersion is 22 and you have set a permission in AndroidManifest.xml to allow phone calls. In API 23, runtime permissions were introduced which requires you to request for dangerous permission,such as calling a phone, at runtime. If a user with a phone using API 23 runs your app and tries to call someone there will be no problem; but if you change later your targetSDKVersion to 23, the user tries to call someone again and you haven't checked for a runtime permission your app will crash.
 
 #### What does compileSdkVersion do? 
@@ -277,6 +295,63 @@ When you write code for Android in your IDE you have access to any SDK by just d
 
 minSdkVersion <= targetSdkVersion <= compileSdkVersion
 
-#### How do you define a variable in the buildconfig?
+#### How do you configure project wide properties?
+
+In your build top-level `build.gradle` you can define properties inside an `ext` block:
+
+```
+buildscript {...}
+allprojects {...}
+
+ext {
+    compileSdkVersion = 28
+    supportLibVersion = "28.0.0"
+    ...
+}
+```
+
+#### Tell one way to store API keys?
+
+First, create a file apikey.properties in your root directory with the values for different secret keys:
+
+```
+CONSUMER_KEY="XXXXXXXXXXX"
+CONSUMER_SECRET="XXXXXXX"
+```
+
+Double quotes are required.
+
+To avoid these keys showing up in your repository, make sure to exclude the file from being checked in by adding to your <i>.gitignore</i> file:
+
+`apikey.properties`
+
+Next, add this section to read from this file in your app/build.gradle file. You'll also create compile-time options that will be generated from this file by using the buildConfigField definition:
+
+```
+def apikeyPropertiesFile = rootProject.file("apikey.properties")
+def apikeyProperties = new Properties()
+apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
+
+android {
+
+  defaultConfig {
+     
+    // should correspond to key/value pairs inside the file   
+    buildConfigField("String", "CONSUMER_KEY", apikeyProperties['CONSUMER_KEY'])
+    buildConfigField("String", "CONSUMER_SECRET", apikeyProperties['CONSUMER_SECRET'])
+  }
+}
+
+```
+
+You can now access these two fields anywhere within your source code with the BuildConfig object provided by Gradle:
+```
+// inside of any of your application's code
+String consumerKey = BuildConfig.CONSUMER_KEY;
+String consumerSecret = BuildConfig.CONSUMER_SECRET;
+Now you have access to as many secret values as you need within your app, but will avoid checking in the actual values into your git repository. 
+```
+
+Suggested Reading: https://guides.codepath.com/android/Storing-Secret-Keys-in-Android.
 
 https://en.wikipedia.org/wiki/Android_(operating_system)

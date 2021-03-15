@@ -11,4 +11,5 @@
 
   {%- include custom-head.html -%}
   
+  {% if page.style %} {% include css/{{ page.style }}.css %} {% endif %}
 </head>

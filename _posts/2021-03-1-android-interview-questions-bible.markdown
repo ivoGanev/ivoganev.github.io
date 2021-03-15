@@ -261,13 +261,13 @@ Lossless compression means that as the file size is compressed, the picture qual
 
 #### What does minSdkVersion do? 
 
-It is the earliest release of the Android SDK that your application can run on. Usually this is because of a problem with the earlier APIs, lacking functionality, or some other behavioral issue.
+It is the earliest release of the Android SDK that your application can run on. The Android system will prevent the user from installing the application if the system's API Level is lower than the value specified in this attribute.
 
 #### What does targetSdkVersion do? 
 
-The targetSdkVersion is tells the OS that you have tested your app on the version you have specified. This is the way to tell the Android OS that your app is forward compatible with new OS features or changes. 
+The targetSdkVersion tells the OS that you have tested your app up until the version you have specified and make it forward compatible.
 
- Let's say your targetSDKVersion is 22 and you have set a permission in AndroidManifest.xml to allow phone calls. In API 23, runtime permissions were introduced which requires you to request for dangerous permission,such as calling a phone, at runtime. If a user with a phone using API 23 runs your app and tries to call someone there will be no problem; but if you change later your targetSDKVersion to 23 and the user tries to call someone again and you haven't checked for a runtime permission your app will crash.
+Let's say your targetSDKVersion is 22 and you have set a permission in AndroidManifest.xml to allow phone calls. In API 23, runtime permissions were introduced which requires you to request for dangerous permission,such as calling a phone, at runtime. If a user with a phone using API 23 runs your app and tries to call someone there will be no problem; but if you change later your targetSDKVersion to 23, the user tries to call someone again and you haven't checked for a runtime permission your app will crash.
 
 #### What does compileSdkVersion do? 
 
@@ -276,5 +276,7 @@ When you write code for Android in your IDE you have access to any SDK by just d
 #### What is the recommended recipe for defining sdk versions? 
 
 minSdkVersion <= targetSdkVersion <= compileSdkVersion
+
+#### How do you define a variable in the buildconfig?
 
 https://en.wikipedia.org/wiki/Android_(operating_system)

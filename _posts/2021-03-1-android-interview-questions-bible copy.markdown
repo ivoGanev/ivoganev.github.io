@@ -488,7 +488,7 @@ The complement is also true:
 Procedural code makes it hard to add new data structures because all the functions must
 change. OO code makes it hard to add new functions because all the classes must change.
 
-#### What is a DTO?
+#### What is a DTO
 A data structure is a class with public variables and no functions. This is sometimes called a data transfer object, or DTO. 
 
 DTOs are very useful structures, especially when communicating with databases or parsing messages from sockets and so on. They often become the first in a series of translation stages that convert raw data in a database into objects in the application code.

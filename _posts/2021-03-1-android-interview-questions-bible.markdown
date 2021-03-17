@@ -26,7 +26,6 @@ Android is a mobile operating system based on a modified version of the Linux ke
 [Wikipedia](https://en.wikipedia.org/wiki/Android_(operating_system)){: .post.a }{:target="_blank"}
 
 
-
 #### How Does Android's Software Architecture look like?
 
 ![Software Stack](/assets/android-interview/a-stack.png)
@@ -71,6 +70,17 @@ Its an API written in Java which consists of:
 - A Notification Manager that enables all apps to display custom alerts in the status bar
 - An Activity Manager that manages the lifecycle of apps and provides a common navigation back stack
 - Content Providers that enable apps to access data from other apps, such as the Contacts app, or to share their own data
+
+
+#### What is the Application class?
+
+Base class for maintaining global application state. It is first to be created when the application starts and the last to get destroyed.
+
+The application object is not guaranteed to stay in memory forever, it will get killed so don’t use mutable state inside it because it will get wiped.
+
+#### What is a Context?
+
+It allows access to application-specific resources and classes, and application operations, such as launching activities, broadcasting and receiving intents, etc. 
 
 #### What is an Android component?
 
@@ -212,9 +222,17 @@ A Service is a component that can perform long-running operations in the backgro
 
 Note: A service runs on the main thread of its hosting process. You should run all blocking operation in a separate thread.
 
-#### Example uses of a Service?
+#### What is a foreground service?
+A foreground service performs some operation that is noticeable to the user. 
+Example: an audio app would use a foreground service to play an audio track. 
+Foreground services must display a Notification. 
+Foreground services continue running even when the user isn't interacting with the app.
 
-Playing music, handle network transactions, interacting with content providers.
+#### What is a background Service
+A background service performs an operation that isn't directly noticed by the user. For example, if an app used a service to compact its storage, that would usually be a background service.
+
+#### What is a bound Service
+A bound service is the server in a client-server interface. It allows components (such as activities) to bind to the service, send requests, receive responses, and perform interprocess communication (IPC). Multiple components can bind to the service at once, but when all of them unbind, the service is destroyed.
 
 #### What is a BroadcastReceiver?
 
@@ -235,7 +253,7 @@ Intent.ACTION_BATTERY_OKAY
 
 2. Register your receiver in the Manifest.xml file for example to listen for a low battery event:
 
-{% highlight kotlin %}
+{% highlight xml %}
 <receiver android:name=".MyReceiver" android:exported="true">
     <intent-filter>
         <action android:name="android.intent.action.BATTERY_LOW"/>
@@ -351,7 +369,375 @@ String consumerKey = BuildConfig.CONSUMER_KEY;
 String consumerSecret = BuildConfig.CONSUMER_SECRET;
 Now you have access to as many secret values as you need within your app, but will avoid checking in the actual values into your git repository. 
 ```
+[Suggested Reading](https://guides.codepath.com/android/Storing-Secret-Keys-in-Android){: .post.a }{:target="_blank"}
 
-Suggested Reading: https://guides.codepath.com/android/Storing-Secret-Keys-in-Android.
+## OOP Principles and Clean Code
 
-https://en.wikipedia.org/wiki/Android_(operating_system)
+This section uses the following sources of information:
+
+- Clean Code - the book,
+- [SOLID principles, David Halewood's blog](https://davidhalewood.com/)
+
+#### What is abstraction?
+
+is a model of a real-world object or phenomenon, limited to a specific context, which represents all details relevant to this context with high accuracy and omits all the rest. Examples:
+
+- A video game controller has only a few buttons, but underneath the controller has a complex control mechanism.
+- A car is a very complex machine but the interface is simple( a steering whell, a gas pedal and a gear shift).
+
+Anytime you see a simple interface covering a more complex system you should think "abstraction".
+
+#### What is polymorphism?
+
+Polymorphism is the ability of different objects to respond in a unique way to the same message.
+
+##### Subtyping
+
+Subtyping allows a function to be written to take an object of a certain type T, but also work correctly, if passed an object that belongs to a type S that is a subtype of T.
+
+In the following example we make cats and dogs subtypes of animals. The procedure letsHear() accepts an animal, but will also work correctly if a subtype is passed to it:
+
+{% highlight java %}
+abstract class Animal {
+    abstract String talk();
+}
+
+class Cat extends Animal {
+    String talk() {
+        return "Meow!";
+    }
+}
+
+class Dog extends Animal {
+    String talk() {
+        return "Woof!";
+    }
+}
+
+static void letsHear(final Animal a) {
+    println(a.talk());
+}
+
+static void main(String[] args) {
+    letsHear(new Cat());
+    letsHear(new Dog());
+}
+{% endhighlight %}
+
+##### Static Binding
+In Java it is achieved by method overloading. The compiler looks at the method signature and decides which method to invoke for a particular method call at compile time.
+
+{% highlight java %}
+public int add(int x, int y){  //method 1
+return x+y;
+}
+
+public int add(int x, int y, int z){ //method 2
+return x+y+z;
+}
+{% endhighlight %}
+
+##### Dynamic Binding
+
+In Java it is achieved by method overriding. Java waits until runtime to determine which object is actually being pointed to by the reference.
+
+## What is inheritance?
+
+It is the ability to build new classes on top of existing ones.
+
+Pros:
+
+- No need for code duplication if a new class with a slightly different behavior is needed.
+- Reliability. The base class has already been tested.
+
+Cons:
+
+- Subclasses have the same interface as their parent class.
+- You can’t hide a method in a subclass if it was declared in the superclass.
+- You must also implement all abstract methods, even if they don’t make sense for your subclass.
+
+#### What is encapsulation?
+
+is the ability of an object to hide its part of its state and behaviours from other objects exposing only a limited interface. To *encapsulate* something means to make it private. Encapsulation is the realization of abstraction.
+
+#### What is the difference between objects and data structures?
+
+Objects hide their data behind abstractions and expose functions that operate on that data. Data structures expose their data and have no meaningful functions.
+
+{% highlight java %}
+// Object
+public interface Vehicle {
+  double getFuelTankCapacityInGallons();
+  double getGallonsOfGasoline();
+}
+{% endhighlight %}
+
+{% highlight java %}
+// Data structure
+public interface Vehicle {
+  double getPercentFuelRemaining();
+}
+{% endhighlight %}
+
+#### What is important to remember when talking about procedural code vs OO code?
+
+Procedural code (code using data structures) makes it easy to add new functions without changing the existing data structures. OO code, on the other hand, makes it easy to add new classes without changing existing functions.
+
+The complement is also true:
+
+Procedural code makes it hard to add new data structures because all the functions must
+change. OO code makes it hard to add new functions because all the classes must change.
+
+#### What is a DTO?
+A data structure is a class with public variables and no functions. This is sometimes called a data transfer object, or DTO. 
+
+DTOs are very useful structures, especially when communicating with databases or parsing messages from sockets and so on. They often become the first in a series of translation stages that convert raw data in a database into objects in the application code.
+
+#### What is the single responsibility principle?
+
+This principle states that each class should have one, and only one reason to change. The responsibility of the class should be scoped to a specific functionality and encapsulated within a single class or module. Primarily it’s concerned with limiting the impact of future change.
+
+It’s fairly easy to spot when a class is violating single responsibility. Let’s look at a simple example:
+
+{% highlight java %}
+public class ReportPrinter {
+
+    public void print(String content) {
+        String formattedContent = format(content);
+
+        printheader();
+        printContent(formattedContent);
+        printFooter();
+    }
+
+    private String format(String content) {
+        //format the string
+    }
+
+    //code
+}
+{% endhighlight %}
+
+What’s clear here is that this class can be changed for two reasons. First, the content of the report could change. Second, the format of the report could change. These two things change for very different reasons. These two aspects of the problem (printing the content) are really two separate responsibilities. They should, therefore, be in separate classes. This would resolve the coupling of these two separate concerns.
+
+So let’s do that:
+
+{% highlight java %}
+public class ReportPrinter {
+    private ReportFormatter formatter;
+
+    public ReportPrinter(ReportFormatter formatter) {
+        this.formatter = formatter;
+    }
+
+    public void print(String content) {
+        String formattedContent = formatter.format(content)
+
+        printHeader();
+        printContent(formattedContent);
+        printFooter();
+    }
+
+    //code
+}
+{% endhighlight %}
+
+## What is the open/closed principle?
+
+The main idea of this principle is to keep existing code from
+breaking when you implement new features.
+
+A class is open if you can extend it, produce a subclass and do whatever you want with it—add new methods or fields, override base behavior, etc.
+
+Some programming languages let you restrict further extension of a class with special keywords, such as final. After this, the class is no longer open. At the same time, the class is closed (you can also say complete) if it’s 100% ready to be used by other classes—its interface is clearly defined and won’t be changed in the future.
+
+{% highlight java %}
+public class AreaCalculator
+{
+    public double area(Object[] shapes)
+    {
+        double area = 0;
+        for (Object shape : shapes) {
+            if (shape instanceOf Rectangle) {
+                Rectangle rectangle = (Rectangle) shape;
+                area += rectangle.getWidth() * rectangle.getHeight();
+            }
+
+            if (shape instanceOf Circle) {
+                Circle circle = (Circle) shape;
+                int radius = circle.getRadius()
+                area += radius * radius * Math.PI;
+            }
+        }
+
+        return area;
+    }
+}
+{% endhighlight %}
+
+A better way:
+
+{% highlight java %}
+public class AreaCalculator
+{
+    public double area(Shape[] shapes)
+    {
+        double area = 0;
+        for (Shape shape : shapes) {
+            area += shape.area();
+        }
+
+        return area;
+    }
+}
+{% endhighlight %}
+
+It is **open to extension** in that it can accept collections of an ever increasing array of Shape’s but it is **closed for modification** as it does what we need it to do now and in the future.
+
+#### What is Liskov's substitution principle?
+
+This dictates that, for your code to adhere to LSP, all subclasses must be completely interchangeable with their parent class. Let's look at a violation example:
+
+{% highlight java %}
+public abstract class Car {
+    //other methods
+
+    public abstract void fillUpWithFuel();
+    public abstract void chargeBattery();
+}
+
+public class PetrolCar extends Car {
+    //code
+    @Override
+    public void fillUpWithFuel() { 
+        this.fuelTankLevel = FUEL_TANK_FULL; 
+    }
+
+    @Override
+    public void chargeBattery() {
+        throw new UnsupportedOperationException("A petrol car cannot be recharged");
+    }
+    //code
+}
+
+public class ElectricCar extends Car {
+    //code
+    @Override
+    public void fillUpWithFuel() {
+        throw new UnsupportedOperationException("It's an electric car");
+    }
+
+    @Override
+    public void chargeBattery() {
+        this.batteryLevel = BATTERY_FULL;
+    }
+    //code
+}
+{% endhighlight %}
+
+By not properly supporting all of the parent class methods and instead throwing exceptions both the PetrolCar and ElectricCar fail to meet the requirements set out by Liskov.
+
+#### What is interface segregation?
+
+A client should never be forced to implement an interface that it doesn’t use.
+
+This is in a similar vain to the *Single Responsibility Principle*. Your abstractions should be small, individual units of business logic so that your clients implement the slice of the pie they need not the whole pie (nor the ice cream, cherry or sprinkles).
+
+{% highlight java %}
+public interface Shape {
+    public int area();
+    public int volume();
+}
+{% endhighlight %}
+
+Does this behavior belongs in the Shape interface? Hmm, not quite. A `Square` doesn't have a volume. A better way to do this:
+
+{% highlight java %}
+public interface Solid {
+    public int volume();
+}
+
+public interface Shape {
+    public int area();
+}
+
+class Cube implements Shape, Solid {
+    // code
+    public int area() {
+        // calculate surface area
+    }
+
+    public int volume() {
+        // calculate volume
+    }
+}
+{% endhighlight %}
+
+#### What is dependency inversion?
+
+It states that the high-level module must not depend on the low-level module, but they should depend on abstractions. Let's look at the example where the `AccountProvider` is our high level module and it currently relies on the low level module `SQLConnection`.:
+
+{% highlight java %}
+public class AccountProvider {
+    SQLConnection dbConnection;
+
+    public AccountProvider(SQLConnection sqlConnection) {
+        dbConnection = sqlConnection;
+    }
+}
+{% endhighlight %}
+
+**A better way**
+The AccountProvider should not care about what database your application uses. To fix this we can create a layer of abstraction, in this case an interface:
+
+{% highlight java %}
+public interface DbConnection {
+    public DbConnection getConnection();
+}
+public class SQLConnection implements DbConnection {
+    public DbConnection getConnection() {
+        //return connection 
+    }
+}
+public class AccountProvider {
+    DbConnection dbConnection;
+
+    public AccountProvider(DbConnection dbConnection) {
+        dbConnection = dbConnection;
+    }
+}
+{% endhighlight %}
+
+#### What is inversion of control
+
+Inversion of Control is what you get when your program callbacks, e.g. like a gui program or a framework. Inversion of control is what separates library from a framework.
+
+#### What is a callback?
+
+Think of a callback as an object that it's only purpose is to be called from another object.
+
+{% highlight java %}
+interface CallBack {
+    void methodToCallBack();
+}
+
+class CallBackImpl implements CallBack {
+    public void methodToCallBack() {
+        System.out.println("I've been called back");
+    }
+}
+
+class Caller {
+
+    public void register(CallBack callback) {
+        callback.methodToCallBack();
+    }
+
+    public static void main(String[] args) {
+        Caller caller = new Caller();
+        CallBack callBack = new CallBackImpl();
+        caller.register(callBack);
+    }
+}
+{% endhighlight %}
+

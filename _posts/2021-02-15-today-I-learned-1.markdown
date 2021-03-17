@@ -7,9 +7,9 @@ categories: OOP, Kotlin, exceptions
 
 This is the first article of a series that are intended to be a diary of my journey in programming. 
 
-A lot of the times you are learning by making mistakes. There is always something to be gained and remembered when mistakes are made and I think that exposing that publicly is nothing to be ashamed of. 
+A lot of the times you are learning by making mistakes. There is always something to be gained and remembered when mistakes are made and I believe that is nothing to be ashamed from. 
 
-On the contrary I feel that when you are not accepting your failures as a chance to learn but as an embarrassment and covering it up you are locking up a great potential of discoveries. Enough with this and let me get to the article.
+On the contrary I feel that when you are not accepting your failures as a chance to learn but as an embarrassment and covering it up you are locking up a great potential of discoveries. 
 
 ----
 
@@ -43,11 +43,11 @@ fun getRandomSurprise(coin: GoldCoin, extraCoins: Collection<Coin>)
 
 I knew that exceptions have performance impact and they could clutter your code with try and catch blocks but why I decided to throw an exception there?
 
-I believe it was a flaw in my logic which led me to this situation and more specifically: A function is a unit that performs some work and if it can't complete it for some it they should notify an error. 
+I believe it was a flaw in my logic which led me to this situation and more specifically: A function is a unit that performs some work and if it can't complete for some reason it should notify for an error. 
 
 At that point when creating the function I was thinking "This function will return a surprise from a bag of coins and can only work when at least one gold coin is present.". Notice the part: "..can only work when.." decides that an error needs to be thrown if someone forgets to put that golden coin in.
 
-### Today learned
+### Today I learned
 
 Exceptions are to be used in exceptional circumstances -- 
 

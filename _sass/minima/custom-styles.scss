@@ -5,3 +5,23 @@
         font-size: medium;
     }
 }
+
+.site-summary-title{
+    @include relative-font-size(1.125);
+    font-weight: 200;
+    letter-spacing: -1px;
+    margin-bottom: 0;
+    margin-left: 20px;
+    color:orangered;
+    float: left;
+  
+    @include media-query($on-palm) {
+      padding-right: 45px;
+    }
+
+    &,
+    &:visited {
+      color: orangered;
+    }
+
+}

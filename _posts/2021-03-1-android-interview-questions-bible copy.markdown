@@ -741,3 +741,36 @@ class Caller {
 }
 {% endhighlight %}
 
+## Jetpack Components
+
+#### What is a ViewModel?
+
+Stores and manages data in a lifecycle conscious way; Survives configuration changes
+
+#### What is LiveData?
+
+LiveData is an observable lifecycle-aware data holder. Ensures to update only observers in an active lifecycle state.
+
+#### What is Work Manager?
+
+Is intended for tasks that require a guarantee that the system will run them, even if the app exits.
+
+#### What is View Binding?
+
+Creates a binding class and variables that are linked with XML views.  Replaces findViewById().
+
+#### What is Data Binding?
+
+Allows you to connect views with data. The workflow is: defines variable in the XML layout file and update it from your code.
+
+#### What is DataStore?
+
+A data storage solution that allows you to store key-value pairs or typed objects with protocol buffers. Replaces SharedPreferences.
+
+#### What are Lifecycle Components Used For?
+
+Solve the problem of putting the entire lifecycle logic in activities or fragments.
+
+#### What is The Paging Library used For?
+
+Helps with loading and displaying small chunks of data at a time.

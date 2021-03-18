@@ -8,19 +8,22 @@ categories: hash, hash tables
 ### What is a data structure?
 Data is just a bunch of collected information used for some purpose. Imagine that you have a list of your friends age in you head being there for the purpose to be sorted so you know who is the oldest one; your friends age would be your data and surprise, your data structure is your brain.
 
-An example of a physical data structure is a sheet of paper containing a list of names. That list of names becomes and the sheet of paper holding that data is your data structure.
+Data structures are used to store the collected data and organize(sort) and manage(insert, update, remove) it efficiently. 
 
-Data structures are used to store the collected data, organize(sort) it and manage(insert, update, remove) it. You can imagine your data being sorted when you work on it with your brain and can sort it manually when its on paper but lets talk about computers because the term data structure itself is meant to be used with them.
+An example of a physical data structure is a sheet of paper containing a list of names. That list of names becomes the data and the sheet of paper holding is your data structure which you can effectively modify with your pen.
 
-### Many data structures
 
-There are many created data structures like: arrays, lists, hash tables and so on, but why do we need them all? Can't we just use an array for everything? Yes we can but it turns out that computers have speed limits and, for example, searching for your friends name in array of 1 000 000 names in the worst case could take 1 000 000 searches. 
+### Why are there so many data structures?
 
-Also, data structures can communicate intention and abstract some of their functionality away. Imagine you are making an infinite runner game where you need to generate floor tiles. The player runs to the right, the camera follows him and decide to remove the block to the left side which is no longer visible and generate another on the right side of the screen so that it looks like the terrain is incredibly long. Yes you can use a list to add and remove tiles but why not use a queue? That way you clearly communicate with other developers that blocks are only to be added to the front and removed from the back.
+Arrays, lists, hash tables and so on, are all data structures but why do we need them all? Can't we just use an array for everything? Let's take a step back and look at what makes an array a data structure -- it is a container for data and can organize and manage the data. But is it <i>efficient</i> ?
+
+It turns out that computers have speed limits and, for example, searching for your friends name in array of 1 000 000 names in the worst case could take 1 000 000 searches depending on how the array was sorted. 
+
+Also, data structures can communicate intention. Imagine you are making an infinite runner game where you need to generate floor tiles. The player runs to the right, the camera follows him and decide to remove the block to the left side which is no longer visible and generate another on the right side of the screen so that it looks like the terrain is incredibly long. Yes you can use a list to add and remove tiles but why not use a queue? That way you clearly communicate with other developers that blocks are only to be added to the front and removed from the back.
 
 #### Arrays
 
-Arrays are great containers to store your data and retrieve it by an index. Creating an array like `int arr[4]` would reserve space in computers memory, say at location 1000, and each integer would take 4 bytes so the addresses become something like this:
+Arrays are great containers to store your data and retrieve it by an index. Creating an array like `int arr[4]` would reserve space in your computer's memory, say at location 1000, and each integer would take 4 bytes so the addresses would look something like this:
 
 ```
  1000 1004 1008 1012 1016
@@ -29,7 +32,7 @@ Arrays are great containers to store your data and retrieve it by an index. Crea
 │    │    │    │    │    │
 └────┴────┴────┴────┴────┘
 ```
-You can easily access an element in the defined memory address by providing the `base_address + (index * element_byte_size)`. 
+You can easily access an element in the defined memory address by using `base_address + (index * element_byte_size)`. 
 
 Question: You now see how an array data structure is created and accessed but how would you insert or delete an item? 
 
@@ -40,7 +43,7 @@ And what if you need to search an array by the data and not by the index, for ex
 
 #### ArrayList (Java)
 
-Java's/Oracle programmers are kind enough to provide an `ArrayList` which is just an array of objects and you get operations like `add()`, `addAll()`, `remove()`, etc., which are eventually enables you to use the arrays as list. Because you are still dealing with an array data structure, time complexity remains the same as the topic above has mentioned.
+Java's/Oracle programmers are kind enough to provide an `ArrayList` which is just an array of objects and you get operations like `add()`, `addAll()`, `remove()`, etc., which eventually enables you to use the arrays as list. Because you are still dealing with an array data structure, time complexity for operations remains the same.
 
 #### Singly Linked List
 
@@ -111,7 +114,8 @@ If we then place all elements according to the function above we get:
 
 With this function we can easily find let's say Ada by simply adding the ASCII codes MOD size of array.
 
-Open Addressing
+###### Open Addressing
+---
 
 The hash function above conveniently didn't cause any problems but needless to say that was unrealistic. Sometimes when you apply a hashing function to two different keys it generates the same index number for both but both items can't go in the same place; this generates a <i>collision</i>.
 
@@ -144,7 +148,8 @@ Open Addressing Solutions:
 - Quadratic probing - Each time a slot hasn't been found the distance grows rapidly.
 - Double hashing - Applies a second hash function when the collision fails
 
-Closed Addressing
+###### Closed Addressing
+--- 
 
 One thing that is really great about data structures is that we can mix them together. Closed addressing is another way to solve collisions by instead directly adding the item in the array slot we use a linked list nodes and if there is a collision we can add more nodes in the same slot.
 

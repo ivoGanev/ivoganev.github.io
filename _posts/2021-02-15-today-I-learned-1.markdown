@@ -11,8 +11,6 @@ A lot of the times you are learning by making mistakes. There is always somethin
 
 On the contrary I feel that when you are not accepting your failures as a chance to learn but as an embarrassment and covering it up you are locking up a great potential of discoveries. 
 
-----
-
 ### When you require it, put it as an argument
 
 I had the pleasure of someone to use one of my library functions and he was quite surprised that an exception was being thrown for a required argument. I won't post my library code but will show a pretty accurate example of what was wrong:
@@ -49,6 +47,6 @@ At that point when creating the function I was thinking "This function will retu
 
 ### Today I learned
 
-Exceptions are to be used in exceptional circumstances -- 
+Exceptions are to be used in exceptional circumstances, more specifically -- 
 
 <i>only when all other programming language features cannot provide you with anything that can make your function work correctly.</i>  

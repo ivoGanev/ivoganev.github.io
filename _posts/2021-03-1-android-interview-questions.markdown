@@ -1,26 +1,26 @@
 ---
 layout: post
-title:  "Android Interview Questions Bible"
+title:  "Android Interview Questions"
 date:   2021-03-1 16:25:08 +0000
 categories: OOP
 ---
 
 ##### What is it?
----
+
 This project is created to ask the most fundamental questions that you should, in my opinion, know for Android and could be a good source to brush up your skills before an interview as opposed to browsing through the massive Android developer guide. 
 
-However, the Android developer guide remains the main origin of the information provided here and if something doesn't add up you should go and read the full documentation.
+##### Why bother?
 
-##### Future plans
----
-
-I am planning to create another html version where all the answers are hidden so you can practice without viewing the material.
+There are many blog posts and sites that provide this information but I have a few points that makes this post different:
+- Android only - There are no Kotlin or Java questions; in my opinion they should be a separate topic.
+- Folded and printer version friendly - There are two versions of this post: one that all the details are folded and one that is printer friendly.
+- Obsolete and deprecated material is not included: Async tasks, Loaders, MVC, etc. are not included in any question.
 
 ## Android Platform
 
 #### What is Android? 
 
-Android is a mobile operating system based on a modified version of the Linux kernel and other open source software, designed primarily for touchscreen mobile devices such as smartphones and tablets.
+Android is an operating system for mobile devices that uses modified version of Linux kernel.
 
 
 [Wikipedia](https://en.wikipedia.org/wiki/Android_(operating_system)){: .post.a }{:target="_blank"}
@@ -29,6 +29,7 @@ Android is a mobile operating system based on a modified version of the Linux ke
 #### How Does Android's Software Architecture look like?
 
 ![Software Stack](/assets/android-interview/a-stack.png)
+<i>Image taken from the [Android platform guide](https://developer.android.com/guide/platform)</i>
 
 #### What Are Some of The Android SDK Tools?
 
@@ -49,7 +50,7 @@ The emulator simulates Android devices on your computer so that you can test you
 
 ##### ADB (Android Debug Bridge) 
 
-A CLI Client-Server tool which can run commands such as: copy files back and forth, install and uninstall apps, run shell commands, and more.  on a connected over USB Android device 
+A CLI(Command Line Interface) Client-Server tool which can run commands such as: copy files back and forth, install and uninstall apps, run shell commands, and more.  on a connected over USB Android device 
 
 ##### AAPT2 (Android Asset Packaging Tool 2)
 
@@ -71,10 +72,11 @@ Its an API written in Java which consists of:
 - An Activity Manager that manages the lifecycle of apps and provides a common navigation back stack
 - Content Providers that enable apps to access data from other apps, such as the Contacts app, or to share their own data
 
-
 #### What is the Application class?
 
 Base class for maintaining global application state. It is first to be created when the application starts and the last to get destroyed.
+
+#### Can you use the Application class for global mutable state?
 
 The application object is not guaranteed to stay in memory forever, it will get killed so don’t use mutable state inside it because it will get wiped.
 
@@ -97,15 +99,19 @@ An android component is simply a piece of code that has a well defined lifecycle
 
 Set the component attribute to `exported=false`
 
-#### What is an Activity?
+#### What is Activity?
+
 An activity serves as an entry point for an app's interaction with the user.
+
 - It is a single focused thing that the user can do.
 - It provides the window which the app draws its UI.
 
 #### Explain the lifecycle callbacks?
+
 As a user navigates through, out of, and back to your app, the Activity instances in your app transition through different states in their lifecycle. 
 
 #### Why do you need to implement lifecycle callbacks?
+
 To avoid:
 
 - Crashing if the user receives a phone call or switches to another app while using your app.
@@ -132,18 +138,23 @@ You can remember them as CSR(Caesar), PSD(The Photoshop file format)
 
 It depends on the process state of the activity.
 
-| Likelihood of being killed | Process state | Activity state |
-|----------------------------|---------------|----------------|
-| Least | Foreground (having or about to get focus) | Created,Started,Resumed |
-|More	|Background (lost focus)|	Paused |
-|Most	|Background (not visible)|	Stopped |
-|Most   |Empty	| Destroyed |
+| Likelihood of being killed | Process state                             | Activity state          |
+|----------------------------|-------------------------------------------|-------------------------|
+| Least                      | Foreground (having or about to get focus) | Created,Started,Resumed |
+|More	                     | Background (lost focus)                   | Paused                  |
+|Most	                     | Background (not visible)                  | Stopped                 |
+|Most                        | Empty	                                 | Destroyed               |
+
+#### How to simulate low memory condition on the device?
+
+You can kill the process manually by using the adb with `kill -9 processID`. It going pretty much through the same experience when the device is low on memory.
 
 #### Is the user input data restored when an activity is recreated?
 
 The system destroys the activity including all the user input data and creates a new one when, for example, the screen is rotated or user switches to multi-windowed mode. The old input data is not automatically transferred to the new instance of the activity so you need to restore it.
 
-#### How do you store and restore the data the user had input?
+#### How do you store and restore user input data?
+
 Use `onSaveInstanceState(Bundle)` to store the user data as a key-value pair.
 
 Use `onCreateView(Bundle)` or alternatively `onRestoreInstanceStateBundle(Bundle)`
@@ -169,6 +180,8 @@ It specifies how a new instance of an activity should be added to a task each ti
 
 #### What is a "standard" launchMode?
 
+Suppose activity stack: A⏴B⏴C. Then launching activity B would produce: A⏴B⏴C⏴B .
+
 - Creates new instance in the calling activity’s task
 - Activity can have multiple instances
 - Instances can reside in different tasks
@@ -177,11 +190,10 @@ It specifies how a new instance of an activity should be added to a task each ti
 NOTE: In order to create a new task you need
 to add a flag `FLAG_ACTIVITY_NEW_TASK` when starting the activity.
 
-Example:
-
-Suppose activity stack: A⏴B⏴C. Then launching activity B would produce: A⏴B⏴C⏴B .
 
 #### What is a "singleTop" launchMode?
+
+Suppose activity stack: A ⏴B ⏴C. Then launching C again would produce: A ⏴B ⏴C onNewIntent().  
 
 - If an instance of an activity is on top of the stack an
 activity won’t be created, instead `onNewIntent()` will be called.
@@ -189,10 +201,6 @@ activity won’t be created, instead `onNewIntent()` will be called.
 - Instances can reside in different tasks
 - On task can have multiple instances
 
-Example:
-
-Suppose activity stack: A ⏴B ⏴C.
-Then launching C again would produce: A ⏴B ⏴C onNewIntent().  
 
 #### What is a "singleInstance" launchMode?
 
@@ -202,14 +210,16 @@ Then launching C again would produce: A ⏴B ⏴C onNewIntent().
 - New activities will launch in a different task
 
 #### What is a "singleTask" launchMode?
+
 - Activity can only have one instance
 - Activity is always the root of the task
 - If an instance of the activity already exists the system will call `onNewIntent()` callback and won't create a new instance.
 
-1. We launch 'C' with `FLAG_ACTIVITY_NEW_TASK`
-Example:
+Suppose:
 
-- Task 1: (A, singleTask)⏴B 
+1. Activity A has `launchMode=singleTask` and we launch activity C with `FLAG_ACTIVITY_NEW_TASK`
+
+- Task 1: A⏴B 
 - Task 2: C
 
 2. Now if we launch A from C:
@@ -236,7 +246,7 @@ A bound service is the server in a client-server interface. It allows components
 
 #### What is a BroadcastReceiver?
 
-It’s a component which listens for messages from the system(system events) or other apps. 
+It’s a component which listens for messages from the system or other apps. 
 
 Here are a few system events that you can listen for:
 ```
@@ -268,9 +278,9 @@ The broadcast will be in packed in the `Intent` argument in `onReceive` in `MyRe
 
 A content provider is used to supply data from one application to another. 
 
-You can look at it as an standard interface with methods like `insert(..)`, `delete(..)`, `update(..)`, etc. that need you to override them and provide an implementation of how they would access your app's data. 
+You can look at it as an standard data access object interface with methods like `insert(..)`, `delete(..)`, `update(..)`, etc. that need you to override them and provide an implementation of how they would access your app's data. 
 
-In order to access the content provider and the methods you override mentioned above you need to use the `ContentResolver` which is available in any Context inheriting object(e.g. Activity) by using `getContentResolver()`.
+In order to access the content provider you need to use the `ContentResolver` which is available in any Context inheriting object, e.g. Activity, by using `getContentResolver()`.
 
 A URI is used to identify the data in the provider. 
 
@@ -307,7 +317,9 @@ Let's say your targetSDKVersion is 22 and you have set a permission in AndroidMa
 
 #### What does compileSdkVersion do? 
 
-When you write code for Android in your IDE you have access to any SDK by just downloading it. To make sure you are not using any API from an SDK that is not available for your phone targets, warnings and errors are issued so that you are able to fix those problems.
+When you write code for Android in your IDE you have access to any SDK by just downloading it. To make sure you are not using any API from an SDK version that is not available on your phone targets, warnings and errors are issued at compile time so that you are able to fix those problems. 
+
+The `compileSdkVersion` allows you to use any SDK API until the provided value. 
 
 #### What is the recommended recipe for defining sdk versions? 
 
@@ -441,7 +453,7 @@ return x+y+z;
 
 In Java it is achieved by method overriding. Java waits until runtime to determine which object is actually being pointed to by the reference.
 
-## What is inheritance?
+#### What is inheritance?
 
 It is the ability to build new classes on top of existing ones.
 
@@ -488,10 +500,10 @@ The complement is also true:
 Procedural code makes it hard to add new data structures because all the functions must
 change. OO code makes it hard to add new functions because all the classes must change.
 
-#### What is a DTO
+#### What is a Data transfer object (DTO)?
 A data structure is a class with public variables and no functions. This is sometimes called a data transfer object, or DTO. 
 
-DTOs are very useful structures, especially when communicating with databases or parsing messages from sockets and so on. They often become the first in a series of translation stages that convert raw data in a database into objects in the application code.
+Data transfer objects are very useful structures, especially when communicating with databases or parsing messages from sockets and so on. They often become the first in a series of translation stages that convert raw data in a database into objects in the application code.
 
 #### What is the single responsibility principle?
 

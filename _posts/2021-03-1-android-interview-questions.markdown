@@ -22,10 +22,6 @@ There are many blog posts and sites that provide this information but I have a f
 
 Android is an operating system for mobile devices that uses modified version of Linux kernel.
 
-
-[Wikipedia](https://en.wikipedia.org/wiki/Android_(operating_system)){: .post.a }{:target="_blank"}
-
-
 #### How Does Android's Software Architecture look like?
 
 ![Software Stack](/assets/android-interview/a-stack.png)
@@ -301,6 +297,58 @@ Lossy compression permanently removes data.
 
 Lossless compression means that as the file size is compressed, the picture quality remains the same - it does not get worse.
 
+## Inter Process Communication (IPC)
+
+It describes the mechanisms used by different types of android components to communicate with one another.
+
+#### What is Intent?
+
+It is a message for an receiver to act upon. Its intended use is to send messages between components.
+
+#### What is IntentFilter?
+
+A matching description of intent values. By comparing the intent object with the intent filter the OS determines which component to start when the intent is implicit.
+
+#### What does FLAT_ACTIVITY_NEW_TASK do when starting an activity?
+
+Start the activity in a new task
+
+If the task is already running for the activity you are now starting, the task will be brought to the foreground with it’s last state restored calling OnNewIntent()
+
+Needs taskAffinity for the Activity to be specified in the manifest to work as expected
+
+#### What does FLAT_ACTIVITY_CLEAR_TOP do when starting an activity?
+
+If the activity is launched in the current task then all of the other activities will get removed and the same activity will get called.
+
+This launch mode can also be used  in conjunction with FLAG_ACTIVITY_NEW_TASK: if used to start the root activity of a task, it will bring any currently running instance of that task to the foreground, and then clear it to its root state. This is especially useful, for example, when launching an activity from the notification manager.
+
+#### What does FLAT_ACTIVITY_CLEAR_TASK do when starting an activity?
+
+Clears all the activities from the task and the launched activity becomes root.
+
+Note: has to be used with FLAG_ACTIVITY_NEW_TASK
+
+#### What is a Binder?
+
+Binders are the entities which allow activities and services to obtain a reference to another service.It allows not simply sending messages to services but directly invoking methods on them.
+
+#### What is a Bundle?
+
+A bundle is a key-value pair object used to pass data between Android components.
+
+#### What is a Parcelable?
+
+In Android we cannot just pass objects to activities. To do this the objects must either implement Serializable or Parcelable interface.
+
+A Parcelable is the Android implementation of the Java Serializable. It assumes that the data will be sent in a specific order in order not to use reflection like Serializable. This way a Parcelable can be processed relatively fast, compared to the standard Java serialization.
+
+#### What is Serializable?
+
+We all know the Java platform allows us to create reusable objects in memory. However, all of those objects exist only as long as the Java virtual machine remains running. It would be nice if the objects we create could exist beyond the lifetime of the virtual machine, wouldn't it? Well, with object serialization, you can flatten your objects and reuse them in powerful ways.
+
+Object serialization is the process of saving an object's state to a sequence of bytes, as well as the process of rebuilding those bytes into a live object at some future time. 
+
 ## Build Configuration
 
 #### What does minSdkVersion do? 
@@ -384,11 +432,6 @@ Now you have access to as many secret values as you need within your app, but wi
 [Suggested Reading](https://guides.codepath.com/android/Storing-Secret-Keys-in-Android){: .post.a }{:target="_blank"}
 
 ## OOP Principles and Clean Code
-
-This section uses the following sources of information:
-
-- Clean Code - the book,
-- [SOLID principles, David Halewood's blog](https://davidhalewood.com/)
 
 #### What is abstraction?
 
@@ -786,3 +829,11 @@ Solve the problem of putting the entire lifecycle logic in activities or fragmen
 #### What is The Paging Library used For?
 
 Helps with loading and displaying small chunks of data at a time.
+
+
+## Sources
+
+- [Java Serialization](https://www.oracle.com/technical-resources/articles/java/serializationapi.html){: .post.a }{:target="_blank"}
+- [Wikipedia](https://en.wikipedia.org/wiki/Android_(operating_system)){: .post.a }{:target="_blank"}
+- Clean Code - the book
+- [SOLID principles, David Halewood's blog](https://davidhalewood.com/){: .post.a }{:target="_blank"}

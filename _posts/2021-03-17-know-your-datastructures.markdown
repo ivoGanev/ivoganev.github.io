@@ -162,6 +162,93 @@ Objective of Hash Function
 - Easy to calculate
 - Resolve any collisions
 
+#### Stacks
+
+{:refdef: style="text-align: center;"}
+![Stack of coins](/assets/data-structures/g890.png)
+{: refdef}
+{:refdef: style="text-align: center;"}
+<i> A stack is just like a pile of coins</i>
+{: refdef}
+
+Imagine what you can do with a stack of coins 
+
+- Put a coin on top
+- Remove the top coin
+- Examine the top coin without removing it
+
+{:refdef: style="text-align: center;"}
+![Stack - How it works](/assets/data-structures/g123.png)
+{: refdef}
+{:refdef: style="text-align: center;"}
+<i> push and pop operations</i>
+{: refdef}
+
+###### Implementation Summary
+
+Stacks can be backed by any data structure but the one that makes most sense is the linked list.
+
+###### Time Complexity
+
+For the linked list implementation of a stack, the push and pop operations take constant time, i.e. O(1).
+
+###### Use case examples
+
+- Undoing commands
+- To reverse a word - Put all the letters in a stack and pop them out. Because of the LIFO order of stack, you will get the letters in reverse order.
+- In compilers - Compilers use the stack to calculate the value of expressions like 2 + 4 / 5 * (7 - 9) by converting the expression to prefix or postfix form.
+- In browsers - The back button in a browser saves all the URLs you have visited previously in a stack. Each time you visit a new page, it is added on top of the stack. When you press the back button, the current URL is removed from the stack, and the previous URL is accessed.
+
+#### Queues
+
+You can imagine this data structure as a real queue for a roller coaster
+
+- One person comes first waiting on line, and then it comes another one. - This operation is called enqueue.
+- The first person has priority to get on the train and is <i>dequeued</i> when he gets in.
+
+###### Basic Operations of Queue
+A queue is an object (an abstract data structure - ADT) that allows the following operations:
+
+- <b>Enqueue</b>: Add an element to the end of the queue
+- <b>Dequeue</b>: Remove an element from the front of the queue
+- <b>IsEmpty</b>: Check if the queue is empty
+- <b>IsFull</b>: Check if the queue is full
+- <b>Peek</b>: Get the value of the front of the queue without removing it
+
+{:refdef: style="text-align: center;"}
+![queue operations](/assets/data-structures/queue.png)
+{: refdef}
+{:refdef: style="text-align: center;"}
+<i> queue operations </i>
+{: refdef}
+
+###### Time Complexity
+
+For the linked list implementation of a queue, the queue and dequeue operations take constant time, i.e. O(1).
+
+###### Implementation Summary
+
+Queues can be backed by any data structure but the one that makes most sense is a doubly linked list.
+
+###### Use case examples
+
+- CPU scheduling, Disk Scheduling
+- When data is transferred asynchronously between two processes.The queue is used for synchronization. For example: IO Buffers, pipes, file IO, etc
+- Handling of interrupts in real-time systems.
+- Call Center phone systems use Queues to hold people calling them in order.
+- In games - Creating an infinite runner game to generate queue floor tiles when the camera moves forward.
+
+#### Trees
+
+This one is also easy if you imagine a tree with branches. 
+
+Other data structures such as arrays, linked list, stack, and queue are linear data structures that store data sequentially. When you perform an operation in a linear data structure, the time complexity increases with the increase in the data size. 
+
+###### Where do trees become useful?
+
+Trees can be used to model: Ancestry Trees, Mind Maps, HTML nodes(DOM), and so on.  
+
 Sources:
 
 [Hash Tables and Hash Functions](https://www.youtube.com/watch?v=KyUTuwz_b7Q&ab_channel=ComputerScience)
+

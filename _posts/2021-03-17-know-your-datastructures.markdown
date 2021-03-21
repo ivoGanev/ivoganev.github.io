@@ -192,6 +192,14 @@ Stacks can be backed by any data structure but the one that makes most sense is 
 
 For the linked list implementation of a stack, the push and pop operations take constant time, i.e. O(1).
 
+###### Stack Operations
+
+- <b>Push</b>: Add an element to the top of a stack
+- <b>Pop</b>: Remove an element from the top of a stack
+- <b>IsEmpty</b>: Check if the stack is empty
+- <b>IsFull</b>: Check if the stack is full
+- <b>Peek</b>: Get the value of the top element without removing it
+
 ###### Use case examples
 
 - Undoing commands

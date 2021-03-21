@@ -72,9 +72,9 @@ Its an API written in Java which consists of:
 
 Base class for maintaining global application state. It is first to be created when the application starts and the last to get destroyed.
 
-#### Can you use the Application class for global mutable state?
+#### You have a few variables that need to hold state and be used within your entire app. Would you store them in the Application class?
 
-The application object is not guaranteed to stay in memory forever, it will get killed so don’t use mutable state inside it because it will get wiped.
+The application object is not guaranteed to stay in memory forever, it will get killed so don’t use mutable state inside it.
 
 #### What is a Context?
 
@@ -116,8 +116,6 @@ To avoid:
 
 #### What are the core six lifecycle callbacks?
 
-You can remember them as CSR(Caesar), PSD(The Photoshop file format)
-
 - `onCreate()` - Called when the activity is created. Used for static set up: create views, bind data to lists, etc. Provides wth Bundle containing the activity's previously frozen state, if there was one.
 
 - `onStart()` - Called after your activity has been stopped, prior to it being started again.
@@ -129,6 +127,14 @@ You can remember them as CSR(Caesar), PSD(The Photoshop file format)
 - `onStop()` - Activity is no longer visible to the user. This may occur, for example, when a newly launched activity covers the entire screen. 
 
 - `onDestroy()` - Called when the user exits the app, `finish()` is invoked, or configuration change (such as device rotation)
+
+#### Usually the system will call onPause() and onStop() before calling onDestroy(). When does the system skips to call onPause() and onStop()?
+
+onPause() and onStop() will not be invoked if `finish()` is called from within the onCreate() method. This might occur, for example, if you detect an error during onCreate() and call finish() as a result. In such a case, though, any cleanup you expected to be done in onPause() and onStop() will not be executed.
+
+#### You have some resources which you need to destroy. Would you do it in the onDestroy() callback?
+
+Although onDestroy() is the last callback in the lifecycle of an activity, it is worth mentioning that this callback may not always be called and should not be relied upon to destroy resources. It is better have the resources created in onStart() and onResume(), and have them destroyed in onStop() and onPause(), respectively.
 
 #### How does the Android OS decides when to kill an activity?
 
@@ -145,32 +151,30 @@ It depends on the process state of the activity.
 
 You can kill the process manually by using the adb with `kill -9 processID`. It going pretty much through the same experience when the device is low on memory.
 
-#### Is the user input data restored when an activity is recreated?
 
-The system destroys the activity including all the user input data and creates a new one when, for example, the screen is rotated or user switches to multi-windowed mode. The old input data is not automatically transferred to the new instance of the activity so you need to restore it.
+#### The phone is rotated and the activity is recreated but your user input is not restored. Why?
 
-#### How do you store and restore user input data?
+You should verify that the view has an valid ID. In order for the Android system to restore the state of the views in your activity, each view must have a unique ID, supplied by the `android:id` attribute.
 
-Use `onSaveInstanceState(Bundle)` to store the user data as a key-value pair.
+#### You have a few variables that you want to store after your screen is rotated. How would you do that?
 
-Use `onCreateView(Bundle)` or alternatively `onRestoreInstanceStateBundle(Bundle)`
+1. Use a ViewModel so that your variables can survive configuration changes. 
+2. You can use `onSaveInstanceState(Bundle)` to store the user data as a key-value pair and restore them back with `onCreateView(Bundle)` or alternatively `onRestoreInstanceStateBundle(Bundle)`.
 
 #### What is an Android task?
+
 - A task stores activity instances
 - Can go in the background
 - Can return to the foreground
 
 
-#### What is Task affinity?
+#### What does taskAffinity do for an activity in AndroidManifest.XML?
 
-- It’s the task’s name
-- Used to determine the task that
-should hold the activity
-- By default: all activities share the same
-affinity(package name)
-- It's defined in the Manifest.XML inside the \<activity> tag.
+- Describes the task’s name
+- Determines the task that should hold the activity
+- By default: all activities share the same affinity(package name)
 
-#### What does launchMode do for an activity in Manifest.XML?
+#### What does launchMode do for an activity in AndroidManifest.XML?
 
 It specifies how a new instance of an activity should be added to a task each time it is launched.
 
@@ -223,7 +227,26 @@ Suppose:
 - Task 1:A ⏴[B gets destroyed]
 - Task 2:C
 
+#### What is a fragment?
+
+A fragment is a modular piece of code which has it's own lifecycle. Fragments cannot live on their own--they must be hosted by an activity or another fragment. The fragment’s view hierarchy becomes part of, or attaches to, the host’s view hierarchy.
+
+#### How would you pass construction arguments to a fragment?
+
+Construction arguments for a Fragment are passed via Bundle using the Fragment#setArgument(Bundle) method. The passed-in Bundle can then be retrieved through the Fragment#getArguments() method in the appropriate Fragment lifecycle method.
+
+#### How do you communicate between fragments and activities?
+
+The standard way to share data between fragments and/or activities is using ViewModel. 
+
+#### You have a one-time value that you need to pass from fragment A to fragment B. How would you do that?
+
+Starting with `androidx.fragment:fragment:1.3.0-alpha04` you can use the FragmentManager's `setFragmentResultListener()` in conjunction with `setFragmentResult()` to send messages back and forward between fragments.
+
+FragmentManager can act as a central store for fragment results. This change allows components to communicate with each other by setting fragment results and listening for those results without requiring those components to have direct references to each other.
+
 #### What is a Service?
+
 A Service is a component that can perform long-running operations in the background of Android OS. It does not provide a user interface. 
 
 Note: A service runs on the main thread of its hosting process. You should run all blocking operation in a separate thread.
@@ -305,6 +328,12 @@ It describes the mechanisms used by different types of android components to com
 
 It is a message for an receiver to act upon. Its intended use is to send messages between components.
 
+#### Describe a few cases where you can us an intent?
+
+- To start an activity
+- To start a service
+- To deliver a broadcast
+
 #### What is IntentFilter?
 
 A matching description of intent values. By comparing the intent object with the intent filter the OS determines which component to start when the intent is implicit.
@@ -365,9 +394,7 @@ Let's say your targetSDKVersion is 22 and you have set a permission in AndroidMa
 
 #### What does compileSdkVersion do? 
 
-When you write code for Android in your IDE you have access to any SDK by just downloading it. To make sure you are not using any API from an SDK version that is not available on your phone targets, warnings and errors are issued at compile time so that you are able to fix those problems. 
-
-The `compileSdkVersion` allows you to use any SDK API until the provided value. 
+When you write code for Android in your IDE you have access to any SDK by just downloading it. To make sure you are not using any API from an SDK version that is not available on your phone targets, warnings and errors are issued at compile time so that you are able to fix those problems. In that sense the `compileSdkVersion` allows you to use any SDK API until the provided value. 
 
 #### What is the recommended recipe for defining sdk versions? 
 
@@ -837,3 +864,4 @@ Helps with loading and displaying small chunks of data at a time.
 - [Wikipedia](https://en.wikipedia.org/wiki/Android_(operating_system)){: .post.a }{:target="_blank"}
 - Clean Code - the book
 - [SOLID principles, David Halewood's blog](https://davidhalewood.com/){: .post.a }{:target="_blank"}
+- https://www.toptal.com/android/interview-questions

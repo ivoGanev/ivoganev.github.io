@@ -21,7 +21,7 @@ It turns out that computers have speed limits and, for example, searching for yo
 
 Also, data structures can communicate intention. Imagine you are making an infinite runner game where you need to generate floor tiles. The player runs to the right, the camera follows him and decide to remove the block to the left side which is no longer visible and generate another on the right side of the screen so that it looks like the terrain is incredibly long. Yes you can use a list to add and remove tiles but why not use a queue? That way you clearly communicate with other developers that blocks are only to be added to the front and removed from the back.
 
-#### Arrays
+### Arrays
 
 Arrays are great containers to store your data and retrieve it by an index. Creating an array like `int arr[4]` would reserve space in your computer's memory, say at location 1000, and each integer would take 4 bytes so the addresses would look something like this:
 
@@ -41,11 +41,11 @@ Answer: By creating a brand new array and that means copying the values one by o
 And what if you need to search an array by the data and not by the index, for example, an array of million names? Searching, insertion and is not really efficient using arrays, to be more specific it takes O(n)(linear time complexity).
 
 
-#### ArrayList (Java)
+### ArrayList (Java)
 
 Java's/Oracle programmers are kind enough to provide an `ArrayList` which is just an array of objects and you get operations like `add()`, `addAll()`, `remove()`, etc., which eventually enables you to use the arrays as list. Because you are still dealing with an array data structure, time complexity for operations remains the same.
 
-#### Singly Linked List
+### Singly Linked List
 
 A singly linked list looks like this:
 
@@ -75,7 +75,7 @@ The <i>head</i> is used to store a reference to the first item of the list. If s
 
 Adding and removing an element to the front only is done in O(1) time complexity but thats about it.
 
-#### Doubly linked list
+### Doubly linked list
 
 Here is how the doubly linked list looks like:
 ```
@@ -88,7 +88,7 @@ null◄──┤ │      ◄─┤ │      ◄─┤ │      ◄─┤ │   
 
 Compared to singly linked list now we can add and remove items to the <i>front and back</i> with O(1) time complexity but we still can't search and access the data structure in a very efficient way.
 
-#### Hash Tables
+### Hash Tables
 Behold the hash tables.
 
 Hash tables are used for extremely fast search, insert and delete operations of data no matter how much data there is. Take this array for example:
@@ -114,7 +114,7 @@ If we then place all elements according to the function above we get:
 
 With this function we can easily find let's say Ada by simply adding the ASCII codes MOD size of array.
 
-###### Open Addressing
+##### Open Addressing
 ---
 
 The hash function above conveniently didn't cause any problems but needless to say that was unrealistic. Sometimes when you apply a hashing function to two different keys it generates the same index number for both but both items can't go in the same place; this generates a <i>collision</i>.
@@ -148,7 +148,7 @@ Open Addressing Solutions:
 - Quadratic probing - Each time a slot hasn't been found the distance grows rapidly.
 - Double hashing - Applies a second hash function when the collision fails
 
-###### Closed Addressing
+##### Closed Addressing
 --- 
 
 One thing that is really great about data structures is that we can mix them together. Closed addressing is another way to solve collisions by instead directly adding the item in the array slot we use a linked list nodes and if there is a collision we can add more nodes in the same slot.
@@ -162,7 +162,7 @@ Objective of Hash Function
 - Easy to calculate
 - Resolve any collisions
 
-#### Stacks
+### Stacks
 
 {:refdef: style="text-align: center;"}
 ![Stack of coins](/assets/data-structures/g890.png)
@@ -184,15 +184,15 @@ Imagine what you can do with a stack of coins
 <i> push and pop operations</i>
 {: refdef}
 
-###### Implementation Summary
+##### Implementation Summary
 
 Stacks can be backed by any data structure but the one that makes most sense is the linked list.
 
-###### Time Complexity
+##### Time Complexity
 
 For the linked list implementation of a stack, the push and pop operations take constant time, i.e. O(1).
 
-###### Stack Operations
+##### Stack Operations
 
 - <b>Push</b>: Add an element to the top of a stack
 - <b>Pop</b>: Remove an element from the top of a stack
@@ -200,7 +200,7 @@ For the linked list implementation of a stack, the push and pop operations take 
 - <b>IsFull</b>: Check if the stack is full
 - <b>Peek</b>: Get the value of the top element without removing it
 
-###### Use case examples
+##### Use case examples
 
 - Undoing commands
 - To reverse a word - Put all the letters in a stack and pop them out. Because of the LIFO order of stack, you will get the letters in reverse order.
@@ -214,7 +214,7 @@ You can imagine this data structure as a real queue for a roller coaster
 - One person comes first waiting on line, and then it comes another one. - This operation is called enqueue.
 - The first person has priority to get on the train and is <i>dequeued</i> when he gets in.
 
-###### Basic Operations of Queue
+##### Basic Operations of Queue
 A queue is an object (an abstract data structure - ADT) that allows the following operations:
 
 - <b>Enqueue</b>: Add an element to the end of the queue
@@ -230,15 +230,15 @@ A queue is an object (an abstract data structure - ADT) that allows the followin
 <i> queue operations </i>
 {: refdef}
 
-###### Time Complexity
+##### Time Complexity
 
 For the linked list implementation of a queue, the queue and dequeue operations take constant time, i.e. O(1).
 
-###### Implementation Summary
+##### Implementation Summary
 
 Queues can be backed by any data structure but the one that makes most sense is a doubly linked list.
 
-###### Use case examples
+##### Use case examples
 
 - CPU scheduling, Disk Scheduling
 - When data is transferred asynchronously between two processes.The queue is used for synchronization. For example: IO Buffers, pipes, file IO, etc
@@ -248,13 +248,76 @@ Queues can be backed by any data structure but the one that makes most sense is 
 
 #### Trees
 
-This one is also easy if you imagine a tree with branches. 
+A tree is a nonlinear hierarchical data structure that consists of nodes connected by edges.
 
-Other data structures such as arrays, linked list, stack, and queue are linear data structures that store data sequentially. When you perform an operation in a linear data structure, the time complexity increases with the increase in the data size. 
+##### Why tree data structures?
+
+Other data structures such as arrays, linked list, stack, and queue are linear data structures that store data sequentially. In order to perform any operation in a linear data structure, the time complexity increases with the increase in the data size. But, it is not acceptable in today's computational world.
+
+Different tree data structures allow quicker and easier access to the data as it is a non-linear data structure.
+
+Node
+
+A node is an entity that contains a key or value and pointers to its child nodes.
+
+The last nodes of each path are called leaf nodes or external nodes that do not contain a link/pointer to child nodes.
+
+The node having at least a child node is called an internal node.
+
+###### Edge
+It is the link between any two nodes.
+
+{:refdef: style="text-align: center;"}
+![Nodes and edges of a tree](/assets/data-structures/nodes-edges_0.png)
+{: refdef}
+{:refdef: style="text-align: center;"}
+<i> Nodes and edges of a tree </i>
+{: refdef}
+
+###### Root
+It is the topmost node of a tree.
+
+###### Height of a Node
+The height of a node is the number of edges from the node to the deepest leaf (ie. the longest path from the node to a leaf node).
+
+###### Depth of a Node
+The depth of a node is the number of edges from the root to the node.
+
+###### Height of a Tree
+The height of a Tree is the height of the root node or the depth of the deepest node.
+
+{:refdef: style="text-align: center;"}
+![Height and depth of each node in a tree](/assets/data-structures/height-depth_0.png)
+{: refdef}
+{:refdef: style="text-align: center;"}
+<i> Height and depth of each node in a tree </i>
+{: refdef}
+
+###### Degree of a Node
+The degree of a node is the total number of branches of that node.
+
+###### Forest
+A collection of disjoint trees is called a forest.
+
+{:refdef: style="text-align: center;"}
+![Creating forest from a tree](/assets/data-structures/forest_0.png)
+{: refdef}
+{:refdef: style="text-align: center;"}
+<i> Creating forest from a tree </i>
+{: refdef}
+
+
+You can create a forest by cutting the root of a tree.
 
 ###### Where do trees become useful?
 
 Trees can be used to model: Ancestry Trees, Mind Maps, HTML nodes(DOM), and so on.  
+
+- Binary Search Trees(BSTs) are used to quickly check whether an element is present in a set or not.
+- Heap is a kind of tree that is used for heap sort.
+- A modified version of a tree called Tries is used in modern routers to store routing information.
+- Most popular databases use B-Trees and T-Trees, which are variants of the tree structure we learned above to store their data
+- Compilers use a syntax tree to validate the syntax of every program you write.
 
 Sources:
 

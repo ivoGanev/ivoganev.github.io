@@ -80,6 +80,13 @@ The application object is not guaranteed to stay in memory forever, it will get 
 
 It allows access to application-specific resources and classes, and application operations, such as launching activities, broadcasting and receiving intents, etc. 
 
+
+#### What is ANR and why does it happen?
+
+‘ANR’ in Android is ‘Application Not Responding.’ It means when the user is interacting with the activity, and the activity is in the onResume() method, a dialog appears displaying “application not responding.”
+
+It happens because we start a heavy and long running task like downloading data in the main UI thread. The solution of the problem is to start your heavy tasks on other thread than the main.
+
 #### What is an Android component?
 
 An android component is simply a piece of code that has a well defined lifecycle.

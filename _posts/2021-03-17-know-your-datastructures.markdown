@@ -248,13 +248,11 @@ Queues can be backed by any data structure but the one that makes most sense is 
 
 #### Trees
 
-A tree is a nonlinear hierarchical data structure that consists of nodes connected by edges.
-
 ##### Why tree data structures?
 
 Other data structures such as arrays, linked list, stack, and queue are linear data structures that store data sequentially. In order to perform any operation in a linear data structure, the time complexity increases with the increase in the data size. But, it is not acceptable in today's computational world.
 
-Different tree data structures allow quicker and easier access to the data as it is a non-linear data structure.
+Different tree data structures allow quicker and easier access to the data as it is a non-linear data structure using hierarchy.
 
 Node
 
@@ -311,13 +309,95 @@ You can create a forest by cutting the root of a tree.
 
 ###### Where do trees become useful?
 
-Trees can be used to model: Ancestry Trees, Mind Maps, HTML nodes(DOM), and so on.  
+Trees can be used to model: Ancestry Trees, Mind Maps, HTML nodes(DOM), Compilers, and so on.  
 
-- Binary Search Trees(BSTs) are used to quickly check whether an element is present in a set or not.
-- Heap is a kind of tree that is used for heap sort.
-- A modified version of a tree called Tries is used in modern routers to store routing information.
-- Most popular databases use B-Trees and T-Trees, which are variants of the tree structure we learned above to store their data
-- Compilers use a syntax tree to validate the syntax of every program you write.
+##### Binary Tree
+
+A binary tree is a tree data structure in which each parent node can have at most two children.
+
+[Example Image]
+
+##### Full Binary Tree
+
+A full Binary tree is a special type of binary tree in which every parent node/internal node has either two or no children.
+
+It is also known as a proper binary tree.
+
+[Example Image]
+
+##### Perfect Binary Tree
+
+A perfect binary tree is a type of binary tree in which every internal node has exactly two child nodes and all the leaf nodes are at the same level.
+
+##### Complete Binary Tree
+
+A complete binary tree is a binary tree in which all the levels are completely filled except possibly the lowest one, which is filled from the left.
+
+A complete binary tree is just like a full binary tree, but with two major differences
+
+All the leaf elements must lean towards the left.
+The last leaf element might not have a right sibling i.e. a complete binary tree doesn't have to be a full binary tree.
+
+##### Balanced Binary Tree
+
+A balanced binary tree, also referred to as a height-balanced binary tree, is defined as a binary tree in which the height of the left and right subtree of any node differ by not more than 1.
+
+To learn more about the height of a tree/node, visit Tree Data Structure.Following are the conditions for a height-balanced binary tree:
+
+difference between the left and the right subtree for any node is not more than one
+the left subtree is balanced
+the right subtree is balanced
+
+##### Binary Search Tree
+
+Binary search tree is a data structure that quickly allows us to maintain a sorted list of numbers.
+
+It is called a binary tree because each tree node has a maximum of two children.
+It is called a search tree because it can be used to search for the presence of a number in O(log(n)) time.
+The properties that separate a binary search tree from a regular binary tree is
+
+All nodes of left subtree are less than the root node
+All nodes of right subtree are more than the root node
+Both subtrees of each node are also BSTs i.e. they have the above two properties
+
+###### Search Operation
+
+The algorithm depends on the property of BST that if each left subtree has values below root and each right subtree has values above the root.
+
+If the value is below the root, we can say for sure that the value is not in the right subtree; we need to only search in the left subtree and if the value is above the root, we can say for sure that the value is not in the left subtree; we need to only search in the right subtree.
+
+##### AVL tree
+
+###### Advantages
+
+The main advantage of AVL tree over BST(Binary Search Tree), comes when the BST is not balanced.
+
+{:refdef: style="text-align: center;"}
+![Binary Search Trees may be balanced, meaning that results like this happen](/assets/data-structures/binary-search-tree_0.png)
+{: refdef}
+{:refdef: style="text-align: center;"}
+<i> Binary search trees can produce skewed results like this.</i>
+{: refdef}
+
+A search though the BST in the case above would take linear time but a search through an AVL tree would take always take logarithmic. An AVL tree with the same data as above would look like this:
+
+{:refdef: style="text-align: center;"}
+![AVL Tree](/assets/data-structures/avl-tree-0.png)
+{: refdef}
+{:refdef: style="text-align: center;"}
+<i> An AVL tree is balanced compared to BST.</i>
+{: refdef}
+
+###### Disadvantages
+
+When inserting or deleting, a node in an AVL tree may become critical or unbalanced and then the tree has to be reorganized. AVL tree structures can be used in situations which require fast searching but the large cost of balancing may limit the usefulness of it.
+
+###### Uses
+
+- Language dictionaries, as they are loaded once and are frequently used for retrieval.
+- They may also be used in Huffman trees for data compression.
+- Expression solvers and parsers.
+- They are also used in implementations of java.util.Set in Java.
 
 Sources:
 

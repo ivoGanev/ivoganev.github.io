@@ -6,20 +6,30 @@ categories: hash, hash tables
 ---
 
 ## What is a data structure?
-Data is just a bunch of collected information used for some purpose. Imagine that you have a list of your friends age in you head being there for the purpose to be sorted so you know who is the oldest one; your friends age would be your data and surprise, your data structure is your brain.
 
-Data structures are used to store efficiently the collected data and organize(sort) and manage(insert, update, remove). 
+Data is a collection of facts or description of things, for example, a list of names. Data structures are containers that are used to <i>efficiently</i>  store, organize(sort) and manage(insert, update, remove) the collected data. 
 
-An example of a physical data structure is a sheet of paper containing a list of names. That list of names becomes the data and the sheet of paper holding is your data structure which you can effectively modify with your pen.
+A sheet of paper could be a simple example of what a data structure is
 
+{:refdef: style="text-align: center;"}
+![what is data](/assets/data-structures/what-is-data.png)
+{: refdef}
+<br>
+
+A sheet of paper can store data but organizing and managing it needs to be done by someone manually which becomes a tedious and inefficient process really quick. 
 
 ## Why are there so many data structures?
 
-Arrays, lists, hash tables and so on, are all data structures but why do we need them all? Can't we just use an array for everything? Let's take a step back and look at what makes an array a data structure -- it is a container for data and can organize and manage the data. But is it <i>efficient</i> ?
+Arrays, lists, hash tables and many more, are all data structures but why do we need them all? Can't we just use a list-like data structure for everything? There are two main reasons to use different data structures which are: <i>efficiency</i> and <i>communicating intention</i>.
 
-It turns out that computers have speed limits and, for example, searching for your friends name in array of 1 000 000 names in the worst case could take 1 000 000 searches depending on how the array was sorted. 
+##### Efficiency
 
-Also, data structures can communicate intention. Imagine you are making an infinite runner game where you need to generate floor tiles. The player runs to the right, the camera follows him and decide to remove the block to the left side which is no longer visible and generate another on the right side of the screen so that it looks like the terrain is incredibly long. Yes you can use a list to add and remove tiles but why not use a queue? That way you clearly communicate with other developers that blocks are only to be added to the front and removed from the back.
+Computers have speed limits and, for example, searching for your friends name in array of 1 000 000 names in the worst case could take 1 000 000 searches depending on how the array was sorted. 
+
+
+##### Communicating intention
+
+Imagine you are making an infinite runner game where you need to generate floor tiles. The player runs to the right, the camera follows him and decide to remove the block to the left side which is no longer visible and generate another on the right side of the screen so that it looks like the terrain is incredibly long. Yes you can use a list to add and remove tiles but why not use a queue? That way you clearly communicate with other developers that blocks are only to be added to the front and removed from the back.
 
 ### Arrays
 
@@ -30,7 +40,7 @@ Imagine an array as a bunch of ordered boxes.
 {: refdef}
 <br>
 
-The boxes are neatly arranged next to each other so you can easily get an item, which we would call an <i>element</i>, by just providing a number called the array's <b>index</b>. The count of the boxes is called the array's <b>length</b>.
+The boxes are neatly arranged next to each other and each box can store a single item, which is usually called <i>element</i>. To access a stored element you need to provide a number called the array's <b>index</b>. The count of the boxes is called the array's <b>length</b>.
 
 {:refdef: style="text-align: center;"}
 ![arrays breakdown](/assets/data-structures/arrays-breakdown.png)
@@ -40,7 +50,7 @@ The boxes are neatly arranged next to each other so you can easily get an item, 
 
 #### Creating an array
 
-When you create an array, say in Java, a memory address needs to be reserved to store the required amount of boxes. Let's create an array to hold the integer of 10.
+Instead of physical boxes, computers store the array elements inside a memory address. When you create an array, say in Java, a memory address needs to be reserved to store the required amount of elements. Let's create an array to hold the integer -- ten.
 
 {% highlight java %}
 // reserve a space for one element in memory
@@ -62,7 +72,7 @@ Eventually behind the scenes deep inside computer's memory, the data can be stor
 <br>
 
 
-Continuing from the example above let's create the array to store 10,20,30,40 and 50 instead of just only one number.
+Now let's create an array to store 10,20,30,40 and 50 instead of just only one number.
 
 {% highlight java %}
 // reserve a space for five elements in memory
@@ -106,7 +116,7 @@ An element in an array can be quickly retrieved by providing its index but if yo
 
 ### ArrayList (Java)
 
-Java's/Oracle programmers are kind enough to provide an `ArrayList` which is just an array of objects and you get operations like `add()`, `addAll()`, `remove()`, etc., which eventually enables you to use the arrays as list. Because you are still dealing with an array data structure, time complexity for operations remains the same.
+`ArrayList` in Java is just an array of objects with operations for adding, inserting and removing elements. Because you are still dealing with an array data structure, what happens behind the scenes is that the array is still copied when these operations are used.
 
 ### Singly Linked List
 

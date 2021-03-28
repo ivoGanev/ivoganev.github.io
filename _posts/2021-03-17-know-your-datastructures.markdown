@@ -5,15 +5,15 @@ date:   2021-03-17 16:45:08 +0000
 categories: hash, hash tables
 ---
 
-### What is a data structure?
+## What is a data structure?
 Data is just a bunch of collected information used for some purpose. Imagine that you have a list of your friends age in you head being there for the purpose to be sorted so you know who is the oldest one; your friends age would be your data and surprise, your data structure is your brain.
 
-Data structures are used to store the collected data and organize(sort) and manage(insert, update, remove) it efficiently. 
+Data structures are used to store efficiently the collected data and organize(sort) and manage(insert, update, remove). 
 
 An example of a physical data structure is a sheet of paper containing a list of names. That list of names becomes the data and the sheet of paper holding is your data structure which you can effectively modify with your pen.
 
 
-### Why are there so many data structures?
+## Why are there so many data structures?
 
 Arrays, lists, hash tables and so on, are all data structures but why do we need them all? Can't we just use an array for everything? Let's take a step back and look at what makes an array a data structure -- it is a container for data and can organize and manage the data. But is it <i>efficient</i> ?
 
@@ -23,23 +23,86 @@ Also, data structures can communicate intention. Imagine you are making an infin
 
 ### Arrays
 
-Arrays are great containers to store your data and retrieve it by an index. Creating an array like `int arr[4]` would reserve space in your computer's memory, say at location 1000, and each integer would take 4 bytes so the addresses would look something like this:
+Imagine an array as a bunch of ordered boxes.
 
-```
- 1000 1004 1008 1012 1016
-┌────┬────┬────┬────┬────┐
-│    │    │    │    │    │
-│    │    │    │    │    │
-└────┴────┴────┴────┴────┘
-```
-You can easily access an element in the defined memory address by using `base_address + (index * element_byte_size)`. 
+{:refdef: style="text-align: center;"}
+![arrays as boxes](/assets/data-structures/arrays-as-boxes.png)
+{: refdef}
+<br>
 
-Question: You now see how an array data structure is created and accessed but how would you insert or delete an item? 
+The boxes are neatly arranged next to each other so you can easily get an item, which we would call an <i>element</i>, by just providing a number called the array's <b>index</b>. The count of the boxes is called the array's <b>length</b>.
 
-Answer: By creating a brand new array and that means copying the values one by one from the first array to the second. 
+{:refdef: style="text-align: center;"}
+![arrays breakdown](/assets/data-structures/arrays-breakdown.png)
+{: refdef}
 
-And what if you need to search an array by the data and not by the index, for example, an array of million names? Searching, insertion and is not really efficient using arrays, to be more specific it takes O(n)(linear time complexity).
+<br>
 
+#### Creating an array
+
+When you create an array, say in Java, a memory address needs to be reserved to store the required amount of boxes. Let's create an array to hold the integer of 10.
+
+{% highlight java %}
+// reserve a space for one element in memory
+anArray = new int[1];
+    
+// set the integer of 10 to be the first item
+anArray[0] = 10;
+{% endhighlight %}
+
+Eventually behind the scenes deep inside computer's memory, the data can be stored only in bits, e.g. 0's and 1's. Memory addresses have space only for eight bits but integers in Java are 32 bits. To store all the 32 bits the system reserves four addresses. 
+
+{:refdef: style="text-align: center;"}
+![arrays in memory](/assets/data-structures/arrays-memory-creation.png)
+{: refdef}
+{:refdef: style="text-align: center;"}
+<i>four addresses are reserved to store an integer in bits</i>
+{: refdef}
+
+<br>
+
+
+Continuing from the example above let's create the array to store 10,20,30,40 and 50 instead of just only one number.
+
+{% highlight java %}
+// reserve a space for five elements in memory
+anArray = new int[5];
+    
+anArray[0] = 10;
+anArray[1] = 20;
+anArray[2] = 30;
+anArray[3] = 40;
+anArray[4] = 50;
+{% endhighlight %}
+
+{:refdef: style="text-align: center;"}
+![items in array](/assets/data-structures/arrays-in-memory.png)
+{: refdef}
+{:refdef: style="text-align: center;"}
+<i>this is how multiple stored elements look like in memory</i>
+{: refdef}
+
+#### Accessing an array
+
+For convenience, array elements are accessed by using just their index, not the memory address. This is possible because we can simply use the following formula:
+
+<br>
+
+> Base Memory Address + (Item's Array Index + Item's Size In Bytes) 
+
+<br>
+
+The first integer is therefore retrieved with the expression: 1000 + 0 * 4 = 1000 hence you can see why the first element is accessed with the index 0.
+
+Accessing an array by its index is quite fast and takes a constant time, i.e. O(1). 
+
+#### Inserting and deleting
+
+Arrays are not dynamic data structures meaning that it is not possible to add or remove items without recreating the array which makes the time complexity for these operations linear, i.e. O(n).
+
+#### Searching for an element
+
+An element in an array can be quickly retrieved by providing its index but if you are searching for a specific one, for example a string "Bob",in the worst case you would have to loop the entire array making the time complexity O(n). In this case fortunately, Hash Tables come to the rescue.
 
 ### ArrayList (Java)
 
@@ -111,7 +174,6 @@ If we then place all elements according to the function above we get:
 │Jan│Tim│Mia│Sam│Leo│Ted│Bea│Lou│Ada│Max│Zoe│
 └───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┘
 ```
-
 With this function we can easily find let's say Ada by simply adding the ASCII codes MOD size of array.
 
 ##### Open Addressing
@@ -307,6 +369,10 @@ A collection of disjoint trees is called a forest.
 
 You can create a forest by cutting the root of a tree.
 
+###### Child vs Sibling
+
+A child relationship is when one element (the child) is inside another element (the parent). A sibling relationship is between two elements that are both inside the same parent element.
+
 ###### Where do trees become useful?
 
 Trees can be used to model: Ancestry Trees, Mind Maps, HTML nodes(DOM), Compilers, and so on.  
@@ -398,6 +464,83 @@ When inserting or deleting, a node in an AVL tree may become critical or unbalan
 - They may also be used in Huffman trees for data compression.
 - Expression solvers and parsers.
 - They are also used in implementations of java.util.Set in Java.
+
+##### Heap Data Structure (Priority Queue)
+
+A Heap is a complete binary tree, that is each level of the tree is completely filled, except possibly the bottom level. At this level, it is filled from left to right. 
+
+In addition to being a complete binary tree,the values in the heap data structure have to be arranged by using one of the two possible ways:
+
+- Max-Heap -- from highest to lowest value or
+- Min-Heap -- from lowest to highest value
+
+Take this binary tree with random values for example
+{:refdef: style="text-align: center;"}
+![Complete binary tree](/assets/data-structures/complete-binary-tree.png)
+{: refdef}
+{:refdef: style="text-align: center;"}
+<i> A complete binary tree.</i>
+{: refdef}
+
+To create heap data structure from the binary tree we need to use a process known as <i>heapify</i> which just swaps the positions of the elements to create an outcome like this:
+
+{:refdef: style="text-align: center;"}
+![Heap data structure](/assets/data-structures/heap.png)
+{: refdef}
+{:refdef: style="text-align: center;"}
+<i> A complete binary tree arranged into a MAX-HEAP heap data structure</i>
+{: refdef}
+
+###### Heapify
+
+Heapify is the process of creating a heap data structure from a binary tree. It is used to create a Min-Heap or a Max-Heap.
+
+###### Insert
+
+Insertion is done at the last level, last node from left to right. Has time complexity of O(log n) because in the worst case one swap of elements would be needed on every level.
+
+###### Delete
+
+Delete just swaps the last element with the one to be deleted and heapifies the tree to become heap again. Has time complexity of O(log n)
+
+###### Peek
+
+Get the first element.
+
+###### Search
+
+Searching is like searching an array and the time complexity is linear.
+
+###### Uses
+
+Heaps allow you to get the smallest or the biggest value quickly and know the NEXT smallest or biggest. That's why it's called a Priority Queue.
+
+#### Graphs
+
+Graphs are used to solve real-life problems that involve representation of the problem space as a network. Examples of networks include telephone networks, circuit networks, social networks (like LinkedIn, Facebook etc.).
+
+For example, a single user in Facebook can be represented as a node (vertex) while their connection with others can be represented as an edge between nodes.
+
+Each node can be a structure that contains information like user’s id, name, gender, etc.
+
+###### Adjacency Matrix
+
+An Adjacency Matrix is a 2D array of size V x V where V is the number of nodes in a graph. A slot matrix[i][j] = 1 indicates that there is an edge from node i to node j.
+
+{:refdef: style="text-align: center;"}
+![Graph represented as Adjacency Matrix](/assets/data-structures/graph-matrix.png)
+{: refdef}
+{:refdef: style="text-align: center;"}
+<i>Graph represented as Adjacency Matrix</i>
+{: refdef}
+
+###### Adjacency List
+
+An adjacency list represents a graph as an array of linked lists.
+
+The index of the array represents a vertex and each element in its linked list represents the other vertices that form an edge with the vertex.
+
+The adjacency list for the graph we made in the first example is as follows:
 
 Sources:
 

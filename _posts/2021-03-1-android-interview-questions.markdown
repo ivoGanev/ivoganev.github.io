@@ -801,6 +801,10 @@ public class AccountProvider {
 
 Inversion of Control is what you get when your program callbacks, e.g. like a gui program or a framework. Inversion of control is what separates library from a framework.
 
+#### How is dependency injection useful?
+
+Dependency injection helps keeping your classes small and focused with the benefit to compose them into arbitrary long chains to achieve complex functionality. The main benefits are single responsibility principle and reusability.
+
 #### What is a callback?
 
 Think of a callback as an object that it's only purpose is to be called from another object.

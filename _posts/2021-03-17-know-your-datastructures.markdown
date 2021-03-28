@@ -9,16 +9,14 @@ categories: hash, hash tables
 
 Data is a collection of facts or description of things, for example, a list of names. Data structures are containers that are used to <i>efficiently</i>  store, organize(sort) and manage(insert, update, remove) the collected data. 
 
-A sheet of paper could be a simple example of what a data structure is
+A sheet of paper could be a simple example of what a data structure is. It can store data but organizing and managing the data needs to be done manually by someone, and could become a tedious and inefficient process really quick. 
 
 {:refdef: style="text-align: center;"}
 ![what is data](/assets/data-structures/what-is-data.png)
 {: refdef}
 <br>
 
-A sheet of paper can store data but organizing and managing it needs to be done by someone manually which becomes a tedious and inefficient process really quick. 
-
-## Why are there so many data structures?
+## Why data structures?
 
 Arrays, lists, hash tables and many more, are all data structures but why do we need them all? Can't we just use a list-like data structure for everything? There are two main reasons to use different data structures which are: <i>efficiency</i> and <i>communicating intention</i>.
 
@@ -29,7 +27,11 @@ Computers have speed limits and, for example, searching for your friends name in
 
 ##### Communicating intention
 
-Imagine you are making an infinite runner game where you need to generate floor tiles. The player runs to the right, the camera follows him and decide to remove the block to the left side which is no longer visible and generate another on the right side of the screen so that it looks like the terrain is incredibly long. Yes you can use a list to add and remove tiles but why not use a queue? That way you clearly communicate with other developers that blocks are only to be added to the front and removed from the back.
+Imagine you are making a 2D infinite runner game where you need to generate floor tiles. As the player runs, new tiles are being created at the front and removed from the back. You can use any data structure to store the current tiles but why not use a queue? That way you clearly communicate with other developers that blocks are only to be added to the front and removed from the back.
+
+##### Composability
+
+Yet another interesting feature of data structures is that they can be made from other data structures.
 
 ### Arrays
 
@@ -112,7 +114,7 @@ Arrays are not dynamic data structures meaning that it is not possible to add or
 
 #### Searching for an element
 
-An element in an array can be quickly retrieved by providing its index but if you are searching for a specific one, for example a string "Bob",in the worst case you would have to loop the entire array making the time complexity O(n). In this case fortunately, Hash Tables come to the rescue.
+An element in an array can be quickly retrieved by providing its index but if you are searching for something specific, for example "Bob" in array of strings, in the worst case you would have to loop the entire array making the time complexity O(n). If you are looking to search quickly for an element inside a data structure take a look at hash tables.
 
 ### ArrayList (Java)
 
@@ -120,50 +122,55 @@ An element in an array can be quickly retrieved by providing its index but if yo
 
 ### Singly Linked List
 
-A singly linked list looks like this:
+In a singly linked list each new added element has a reference to the previous one and the last points to null. Items are efficiently added and removed only at the front of the list.
 
-```
-┌─────┬┬────┬┬────┬┐
-│ Jon ││Tim ││Zoe ││
-│     │┼─►  │┼─►  │┼─► Null
-│  ▲  ││    ││    ││
-└──┬──┴┴────┴┴────┴┘
-   │
-  head
-```
+{:refdef: style="text-align: center;"}
+![singly linked list](/assets/data-structures/singly-linked-list.png)
+{: refdef}
+<br>
 
-Each element in this data structure contains a special node which points to the previous one, and the last points to null. Items are efficiently added and removed at the front of the list.
+This data structure is not backed by an array but a special <i>head</i> variable that keeps track of the first element for quick access. If say, we want to add a new item to the list called Jim the list would look like this
 
-The <i>head</i> is used to store a reference to the first item of the list. If say, we want to add a new item to the list called Jim the list would look like this:
+{:refdef: style="text-align: center;"}
+![singly linked list add](/assets/data-structures/singly-linked-list-add.png)
+{: refdef}
+<br>
 
-```
-┌─────┬┬─────┬┬────┬┬────┬┐
-│ Jan ││ Jon ││Tim ││Zoe ││
-│     │┼─►   │┼─►  │┼─►  │┼─► Null
-│  ▲  ││     ││    ││    ││
-└──┬──┴┴─────┴┴────┴┴────┴┘
-   │
-  head
-```
-
-Adding and removing an element to the front only is done in O(1) time complexity but thats about it.
+Adding and removing an element to the front only is done in O(1) time complexity. Searching is in linear time.
 
 ### Doubly linked list
 
-Here is how the doubly linked list looks like:
-```
-       ┌─┬──────┬─┬────────┬─┬────────┬─┬────────┬─┐
-       │ │      │ ├─►      │ ├─►      │ ├─►      │ ├──►null
-       │ │ Jane │ │ │ John │ │ │ Mike │ │ │ Jess │ │
-null◄──┤ │      ◄─┤ │      ◄─┤ │      ◄─┤ │      │ │
-       └─┴────────┴─┴────────┴─┴────────┴─┴──────┴─┘
-```
+This data structure is an improvement of singly linked list which in addition keeps track of first element with a variable named <i>tail</i>. 
+{:refdef: style="text-align: center;"}
+![doubly linked list](/assets/data-structures/doubly-linked-list.png)
+{: refdef}
+<br>
 
 Compared to singly linked list now we can add and remove items to the <i>front and back</i> with O(1) time complexity but we still can't search and access the data structure in a very efficient way.
 
-### Hash Tables
-Behold the hash tables.
+#### Uses
 
+- A music player which has next and prev buttons.
+- Represent a deck of cards in a game.
+- Undo-Redo functionality
+
+### Circular Doubly Linked List
+
+This is a doubly linked list which doesn't have null nodes. The last node points to the first node and the first node points to the last.
+
+{:refdef: style="text-align: center;"}
+![circular doubly linked list](/assets/data-structures/circular-doubly-linked-list.png)
+{: refdef}
+<br>
+
+#### Uses
+
+- Playing the next song in a music list if the last track was ended.
+ (Singly Circular Linked List)
+- Windows tab rotating (e.g Alt+Tab)
+- Keep track of players in a multiplayer game
+
+### Hash Tables
 Hash tables are used for extremely fast search, insert and delete operations of data no matter how much data there is. Take this array for example:
 
 ```

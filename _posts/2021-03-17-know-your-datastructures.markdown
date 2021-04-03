@@ -31,7 +31,7 @@ Computers have speed limits and, for example, searching for your friends name in
 
 To communicate intention through code with other programmers is very important aspect when you write computer programs.
 
-Imagine you are making a 2D infinite runner game where you need to generate floor tiles. As the player runs, new tiles are being created at the front and removed from the back. You can use any data structure to store the current tiles but why not use a queue? That way you clearly communicate with other developers that blocks are only to be added to the front and removed from the back.
+Imagine you are making a 2D infinite runner game where you need to generate floor tiles. As the player runs, new tiles are being created at the front and removed from the back. You can use anything to store the current tiles but why not use something that forms a queue? That way you clearly communicate with other developers that blocks are only to be added to the front and removed from the back.
 
 ## Arrays
 
@@ -62,7 +62,7 @@ anArray = new int[1];
 anArray[0] = 10;
 {% endhighlight %}
 
-Eventually behind the scenes deep inside computer's memory, the data can be stored only in bits, e.g. 0's and 1's. Memory addresses have space only for eight bits but integers in Java are 32 bits. To store all the 32 bits the system reserves four addresses. 
+Eventually behind the scenes deep inside computer's memory, the data can be stored only in bits, i.e. 0's and 1's. Memory addresses have space only for eight bits but integers in Java are 32 bits. To store all the 32 bits the system reserves four addresses. 
 
 {:refdef: style="text-align: center;"}
 ![arrays in memory](/assets/data-structures/arrays-memory-creation.png)
@@ -178,9 +178,7 @@ Hash tables are arrays which have a very specific rule for inserting elements so
 
 #### Inserting
 
-When inserting an element in the hash table, instead of you being the one to tell what index should the element reside, a <i>hash function</i> takes that role and provides an algorithm to generate the index of the array slot. 
-
-For example, let's say we decide to keep a list of names in our hash table and design our hash function to sum all the characters ASCii codes and use modulo operation on them to return the index of the array. First we put 'Bil'
+When putting an element into the hash table, a <i>hash function</i> generates an array index for the element instead of you being the one to provide it. The function itself is just an algorithm which takes the element, 'Bob' for example and turns it into an index. 
 
 {:refdef: style="text-align: center;"}
 ![Bil inserted in hash table](/assets/data-structures/hash-map-array-example.png)
@@ -194,6 +192,7 @@ Next we put 'Zoe'
 {: refdef}
 <br>
 
+In this hash table we use our own hash function which is to sum all the characters ASCii codes and use the modulo operation on it.
 #### Open Addressing
 
 The hash function above conveniently didn't cause any problems but needless to say that was unrealistic. Sometimes when you apply a hashing function to two different elements (also called <i>keys</i>) it generates the same index number for both of them but they can't go in the same place; this generates a <i>collision</i>.

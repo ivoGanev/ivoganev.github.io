@@ -53,12 +53,4 @@ Exceptions are a <b>language feature</b> that expands on error codes and can be 
 
 <i>only when all other programming language features and/or design choices leave you no other option.</i>
 
-Here are a few examples of how to avoid exceptions:
-
-- An argument is missing.
-<br>
-- Can you require it in the method body?
-
-- It's the last song and the music player tries to auto-play the next one.
-<br>
-- Maybe use a CircularLinkedList?
+When you find yourself asking the question 'Should I throw an exception?' you should consider turning it around and asking 'How can I design this without making it fail?'

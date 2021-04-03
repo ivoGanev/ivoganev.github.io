@@ -158,7 +158,6 @@ It depends on the process state of the activity.
 
 You can kill the process manually by using the adb with `kill -9 processID`. It going pretty much through the same experience when the device is low on memory.
 
-
 #### The phone is rotated and the activity is recreated but your user input is not restored. Why?
 
 You should verify that the view has an valid ID. In order for the Android system to restore the state of the views in your activity, each view must have a unique ID, supplied by the `android:id` attribute.
@@ -251,6 +250,10 @@ The standard way to share data between fragments and/or activities is using View
 Starting with `androidx.fragment:fragment:1.3.0-alpha04` you can use the FragmentManager's `setFragmentResultListener()` in conjunction with `setFragmentResult()` to send messages back and forward between fragments.
 
 FragmentManager can act as a central store for fragment results. This change allows components to communicate with each other by setting fragment results and listening for those results without requiring those components to have direct references to each other.
+
+#### In your activity's OnCreate() you add a fragment with fragment transaction commit() but the fragment's root view is still null in onStart(). What could be the problem?
+
+Committing a transaction is async and posted at the end of the main thread handler queue. Use `commitNow()` to properly initialize the fragment.
 
 #### What is a Service?
 
@@ -797,7 +800,7 @@ public class AccountProvider {
 }
 {% endhighlight %}
 
-#### What is inversion of control
+#### What is inversion of control?
 
 Inversion of Control is what you get when your program callbacks, e.g. like a gui program or a framework. Inversion of control is what separates library from a framework.
 

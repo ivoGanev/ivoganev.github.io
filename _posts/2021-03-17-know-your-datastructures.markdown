@@ -7,9 +7,12 @@ categories: hash, hash tables
 
 ## What is a data structure?
 
-Data is a collection of facts or description of things, for example, a list of names. Data structures are containers that are used to <i>efficiently</i>  store, organize(sort) and manage(insert, update, remove) the collected data. 
 
-A sheet of paper could be a simple example of what a data structure is. It can store data but organizing and managing the data needs to be done manually by someone, and could become a tedious and inefficient process really quick. 
+Data is a collection of facts or description of things, for example, a list of names.
+
+Data structures store data and can <i>efficiently</i> organize (sort) and manage (insert, update, remove) it. 
+
+A sheet of paper can store data but organizing and managing it needs to be done manually by someone, becoming tedious and inefficient process really quick.
 
 {:refdef: style="text-align: center;"}
 ![what is data](/assets/data-structures/what-is-data.png)
@@ -18,31 +21,28 @@ A sheet of paper could be a simple example of what a data structure is. It can s
 
 ## Why data structures?
 
-Arrays, lists, hash tables and many more, are all data structures but why do we need them all? Can't we just use a list-like data structure for everything? There are two main reasons to use different data structures which are: <i>efficiency</i> and <i>communicating intention</i>.
+Arrays, lists, hash tables and many more, are all data structures but why do we need them all? Can't we just use some sort of general data structure and use it to store and manage every bit of information? There are two main reasons to use different data structures which are: <i>efficiency</i> and <i>communicating intention</i>.
 
 ##### Efficiency
 
-Computers have speed limits and, for example, searching for your friends name in array of 1 000 000 names in the worst case could take 1 000 000 searches depending on how the array was sorted. 
-
+Computers have speed limits and, for example, searching for your friends name in array of one million names in the worst case could take million searches which takes precious time.
 
 ##### Communicating intention
 
+To communicate intention through code with other programmers is very important aspect when you write computer programs.
+
 Imagine you are making a 2D infinite runner game where you need to generate floor tiles. As the player runs, new tiles are being created at the front and removed from the back. You can use any data structure to store the current tiles but why not use a queue? That way you clearly communicate with other developers that blocks are only to be added to the front and removed from the back.
 
-##### Composability
+## Arrays
 
-Yet another interesting feature of data structures is that they can be made from other data structures.
-
-### Arrays
-
-Imagine an array as a bunch of ordered boxes.
+An array is just a bunch of ordered boxes in computers memory.
 
 {:refdef: style="text-align: center;"}
 ![arrays as boxes](/assets/data-structures/arrays-as-boxes.png)
 {: refdef}
 <br>
 
-The boxes are neatly arranged next to each other and each box can store a single item, which is usually called <i>element</i>. To access a stored element you need to provide a number called the array's <b>index</b>. The count of the boxes is called the array's <b>length</b>.
+The boxes are neatly arranged next to each other and used to store a single item, which is usually called <b>element</b>. To access a stored element you need to provide a number called the array's <b>index</b>. The count of the boxes is called the array's <b>length</b>.
 
 {:refdef: style="text-align: center;"}
 ![arrays breakdown](/assets/data-structures/arrays-breakdown.png)
@@ -116,11 +116,11 @@ Arrays are not dynamic data structures meaning that it is not possible to add or
 
 An element in an array can be quickly retrieved by providing its index but if you are searching for something specific, for example "Bob" in array of strings, in the worst case you would have to loop the entire array making the time complexity O(n). If you are looking to search quickly for an element inside a data structure take a look at hash tables.
 
-### ArrayList (Java)
+## ArrayList (Java)
 
 `ArrayList` in Java is just an array of objects with operations for adding, inserting and removing elements. Because you are still dealing with an array data structure, what happens behind the scenes is that the array is still copied when these operations are used.
 
-### Singly Linked List
+## Singly Linked List
 
 In a singly linked list each new added element has a reference to the previous one and the last points to null. Items are efficiently added and removed only at the front of the list.
 
@@ -138,7 +138,7 @@ This data structure is not backed by an array but a special <i>head</i> variable
 
 Adding and removing an element to the front only is done in O(1) time complexity. Searching is in linear time.
 
-### Doubly linked list
+## Doubly linked list
 
 This data structure is an improvement of singly linked list which in addition keeps track of first element with a variable named <i>tail</i>. 
 {:refdef: style="text-align: center;"}
@@ -154,7 +154,7 @@ Compared to singly linked list now we can add and remove items to the <i>front a
 - Represent a deck of cards in a game.
 - Undo-Redo functionality
 
-### Circular Doubly Linked List
+## Circular Doubly Linked List
 
 This is a doubly linked list which doesn't have null nodes. The last node points to the first node and the first node points to the last.
 
@@ -170,53 +170,51 @@ This is a doubly linked list which doesn't have null nodes. The last node points
 - Windows tab rotating (e.g Alt+Tab)
 - Keep track of players in a multiplayer game
 
-### Hash Tables
-Hash tables are used for extremely fast search, insert and delete operations of data no matter how much data there is. Take this array for example:
+## Hash Tables
 
-```
-  0   1   2   3   4   5   6   7   8   9  10
-┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┐
-│Bea│Tim│Leo│Sam│Mia│Zoe│Jan│Lou│Max│Ada│Ted│
-└───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┘
-```
-You know that getting elements by index is easy but how do we get them by looking for the element itself?. It turns out that you can use the data to calculate the index number -- <i>a hashing function</i>. For this example lets use the hashing function: 
+While arrays can retrieve extremely fast elements when you know their index, they are not efficient when you look for something like a name because in the worst case you would need to loop over the entire array to find that element.
 
-Index Number = sum of the ASCII codes MOD size of array.
+Hash tables are arrays which have a very specific rule for inserting elements so that they can be retrieved with one operation instead of iterating. 
 
-If we then place all elements according to the function above we get:
+#### Inserting
 
-```
-  0   1   2   3   4   5   6   7   8   9  10
-┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┐
-│Jan│Tim│Mia│Sam│Leo│Ted│Bea│Lou│Ada│Max│Zoe│
-└───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┘
-```
-With this function we can easily find let's say Ada by simply adding the ASCII codes MOD size of array.
+When inserting an element in the hash table, instead of you being the one to tell what index should the element reside, a <i>hash function</i> takes that role and provides an algorithm to generate the index of the array slot. 
 
-##### Open Addressing
----
+For example, let's say we decide to keep a list of names in our hash table and design our hash function to sum all the characters ASCii codes and use modulo operation on them to return the index of the array. First we put 'Bil'
 
-The hash function above conveniently didn't cause any problems but needless to say that was unrealistic. Sometimes when you apply a hashing function to two different keys it generates the same index number for both but both items can't go in the same place; this generates a <i>collision</i>.
+{:refdef: style="text-align: center;"}
+![Bil inserted in hash table](/assets/data-structures/hash-map-array-example.png)
+{: refdef}
+<br>
 
-Lets say that the hashing function generated the indexes for: "Jan","Tim","Mia","Sam","Bea" and "Lou":
+Next we put 'Zoe'
 
-```
-Indexes generated are: 0,1,2,3,6 and 7.
+{:refdef: style="text-align: center;"}
+![Zoe inserted in hash table](/assets/data-structures/hash-map-array-zoe.png)
+{: refdef}
+<br>
 
-  0   1   2   3   4   5   6   7   8   9  10
-┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┐
-│Jan│Tim│Mia│Sam│   │   │Bea│Lou│   │   │   │
-└───┴───┴───┴───┴───┴───┴───┴───┴───┴───┴───┘
-```
+#### Open Addressing
 
-Now imagine that for "Ted" the hashing function generates index 1 but there is already an element "Tim" there so what should we do? 
+The hash function above conveniently didn't cause any problems but needless to say that was unrealistic. Sometimes when you apply a hashing function to two different elements (also called <i>keys</i>) it generates the same index number for both of them but they can't go in the same place; this generates a <i>collision</i>.
 
-Resolving a collision by placing an item somewhere than its calculated address is called <i>open addressing</i> because every location is open to any item.
+For 'Ben' the hashing function generates index 2 but there is already an element 'Zoe' there so what should we do? 
 
-One open addressing technique we can use to resolve our current collisions is <i>linear probing</i>(a linear search) which tries to find where the next available slot is by searching one by one each element after the collided index. If it gets to the end of the array and it still can't find any space to place the item it might cycle around to the beginning of the array and continue searching from there.
+{:refdef: style="text-align: center;"}
+![Collision](/assets/data-structures/hash-map-open-addressing.png)
+{: refdef}
+<br>
 
-To look up for an item in the table the hashing function is used but if there are collisions then linear probing has to be used again. 
+Resolving a collision by placing an item somewhere than its calculated index address is called <i>open addressing</i> because every location is open to any item.
 
+To insert the element into the hash table and resolve the collision we can use an open addressing technique called <i>linear probing</i> (linear searching). The technique tries to find where the next empty slot is by searching one by one each element after the collided index. If it gets to the end of the array and it still can't find any space to place the item it might cycle around to the beginning of the array and continue searching from there.
+
+{:refdef: style="text-align: center;"}
+![Collision](/assets/data-structures/hash-map-linear-probing.png)
+{: refdef}
+<br>
+
+When you try to get an element from the hash table, the hashing function is used but if there are collisions then linear probing has to be used again. 
 
 The more items there are in a hash table the bigger the chance of collision when inserting more data. One way to deal with this is to create a bigger hash table, perhaps one that it is always 70% occupied. The ratio of the total number stored and the size of the array is called the <i>load factor</i>. If the hash table is implemented as a dynamic data structure then it can be auto-resized when the load factor reaches a certain threshold. 
 
@@ -225,23 +223,44 @@ Open Addressing Solutions:
 - Linear probing - One problem that linear probing creates is called <i>primary clustering</i> where keys might bunch inside the array while large portions remain unoccupied. 
 - Plus 3 rehash - Instead every next slot we probe every third slot along until a free space is found.
 - Quadratic probing - Each time a slot hasn't been found the distance grows rapidly.
-- Double hashing - Applies a second hash function when the collision fails
+- Double hashing - Applies a second hash function when the collision fails.
 
-##### Closed Addressing
---- 
+#### Closed Addressing
 
 One thing that is really great about data structures is that we can mix them together. Closed addressing is another way to solve collisions by instead directly adding the item in the array slot we use a linked list nodes and if there is a collision we can add more nodes in the same slot.
 
+{:refdef: style="text-align: center;"}
+![Collision](/assets/data-structures/hash-map-closed-addressing.png)
+{: refdef}
+<br>
+
 To find an item you just need to generate the hash function and get the index and that way the lookup would be fast.
 
-Objective of Hash Function
+#### Objective of Hash Function
 
-- Minimize collisions
-- Uniform distribution of hash functions
-- Easy to calculate
-- Resolve any collisions
+:heavy_check_mark: Minimize collisions
+<br>
+:heavy_check_mark: Uniform distribution of hash functions
+<br>
+:heavy_check_mark: Easy to calculate
+<br>
+:heavy_check_mark: Resolve any collisions
 
-### Stacks
+#### Open vs. Closed Addressing
+
+###### Open Addressing Benefits
+
+- No size overhead apart from the hash table array.
+- Better memory locality and cache performance. All elements laid out linearly in memory.
+- Performs better than closed addressing when the number of keys is known in advance and the churn is low.
+
+###### Closed Addressing Benefits
+
+- Easier removal (no need for deleted markings)
+- Typically performs better with high load factor.
+- No issues with clustering.
+
+## Stacks
 
 {:refdef: style="text-align: center;"}
 ![Stack of coins](/assets/data-structures/g890.png)
@@ -263,15 +282,15 @@ Imagine what you can do with a stack of coins
 <i> push and pop operations</i>
 {: refdef}
 
-##### Implementation Summary
+#### Implementation Summary
 
 Stacks can be backed by any data structure but the one that makes most sense is the linked list.
 
-##### Time Complexity
+#### Time Complexity
 
 For the linked list implementation of a stack, the push and pop operations take constant time, i.e. O(1).
 
-##### Stack Operations
+#### Stack Operations
 
 - <b>Push</b>: Add an element to the top of a stack
 - <b>Pop</b>: Remove an element from the top of a stack
@@ -279,7 +298,7 @@ For the linked list implementation of a stack, the push and pop operations take 
 - <b>IsFull</b>: Check if the stack is full
 - <b>Peek</b>: Get the value of the top element without removing it
 
-##### Use case examples
+#### Use case examples
 
 - Undoing commands
 - To reverse a word - Put all the letters in a stack and pop them out. Because of the LIFO order of stack, you will get the letters in reverse order.

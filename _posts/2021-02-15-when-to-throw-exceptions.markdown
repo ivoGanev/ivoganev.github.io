@@ -22,8 +22,17 @@ fun getRandomSurprise(coins: Collection<Coin>): Surprise {
 }
 {% endhighlight %}
 
-<br>
-A function that is better designed could look like this
+But why did I throw exception here?
+
+My definition of a function -- a unit that performs some work and if it can't complete for some reason it should notify for an error -- led me to that decision. 
+
+But what do we consider an error?
+
+### Don't design thinking in terms of errors
+
+An error could be a very broad term to describe a situation where things go wrong, which in the example code above was when the function is not receiving a required argument. But thinking in terms of errors can make you biased.
+
+Looking at the library function again, there is much better design for it
 
 {% highlight kotlin %}
 fun getRandomSurprise(coin: GoldCoin, extraCoins: Collection<Coin>)
@@ -35,22 +44,14 @@ fun getRandomSurprise(coin: GoldCoin, extraCoins: Collection<Coin>)
 {% endhighlight %}
 <br>
 
-But why did I throw exception in the first code example? My definition of a function led me to that decision.
-
-My definition of a function -- a unit that performs some work and if it can't complete for some reason it should notify for an error. 
-
-But what do you consider an error?
-
-### Don't think in terms of errors
-
-If you think about it for a second, an error could be a very broad term to describe a situation where things go wrong, which in the first example above, for me was when the function is not receiving enough input arguments. 
-
-So I considered the case of a missing argument for an error and this is where the problem lies -- thinking in terms of errors can make you throw exceptions everywhere.
+It turns out that just by thinking if you should throw exception or not, your thought process is taking you through a path that maybe you didn't even desired. In this case notice that requiring an argument can be achieved by just a simple language feature (putting the argument in the method body). 
 
 ### When to use exceptions?
 
-Exceptions are a <b>language feature</b> that expands on error codes and can be used to design your functions, but they comes with drawbacks and should be used ideally -- 
+Exceptions are a <b>language feature</b> that expands on error codes and can be used to design your functions to handle failures, but they come with [drawbacks](https://wiki.c2.com/?AvoidExceptionsWheneverPossible){:target="_blank"} and (to me)
 
-<i>only when all other programming language features and/or design choices leave you no other option.</i>
+{:refdef: style="text-align: center;"}
+ <i>should be used ideally only when all other programming language features and/or design choices leave you no other option.</i>
+{: refdef}
 
-When you find yourself asking the question 'Should I throw an exception?' you should consider turning it around and asking 'How can I design this without making it fail?'
+When you find yourself asking a question like 'Should I throw an exception?' you should consider turning it around and asking 'How can I design this function without making it fail?'

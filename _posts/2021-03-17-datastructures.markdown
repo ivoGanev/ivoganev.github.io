@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Know your data structures"
+title:  "Data structures"
 date:   2021-03-17 16:45:08 +0000
 categories: hash, hash tables
 ---

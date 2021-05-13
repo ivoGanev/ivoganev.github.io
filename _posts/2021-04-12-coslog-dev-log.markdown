@@ -5,6 +5,39 @@ date:   2021-04-12 12:25:08 +0000
 categories: OOP, Kotlin, exceptions
 --- 
 
+
+## LiveData is triggered as soon as you observe it.
+
+This is just a small note to remember: whenever a `LiveData` is start being observed it will notify immediately the observer. It looks pretty weird design decision to me because in the moment of assignment we know that the data hasn't changed and therefore there is
+no reason of being notified.
+
+## Views in fragments are not yet measured in onCreateView() and onViewCreated()
+
+Yes, it has been a tough one. I've had this bug where I was getting 0 for a view that has been using "match_parent" or "wrap_content"
+for width and height. It turns out that the layout is not measured yet even in `onViewCreated()`. The solution is to post the measurement like this:
+
+{% highlight kotlin %}
+override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    binding.root.post {
+        // this would make sure you get the layout measured and not getting any 0's
+        recyclerView.addItemDecoration(BoundsOffsetDecoration())
+    }
+}
+{% endhighlight %}
+
+
+## Justify your solutions
+
+It's my first time working with a team of more than two people, and I found myself in difficult situations where I can't explain why I have designed a specific part of the application as it is; consequently I felt frustrated.
+
+Never the less, I've got something very important and interesting out of that experience: to always justify my decisions. It might sound like an overkill but I found out that it can actually reveal extremely bad design choices. Here is what you can try to improve your way of moving through the development process:
+
+1. State your problem
+2. Find the solution
+3. Justify the solution to yourself
+4. Test it thoroughly
+5. Propose the solution and justify it to the others
+
 ## How to execute logic only when the fragment is loaded, resisting configuration change and process death?
 
 A cache is shared between two fragments but it needs to be cleared only when the app enters any one of those fragments. It is tempting to put the method inside `onViewCreated()` or `onResume()` but they will be called when the app rotates and I didn't want that. This one got solved by checking if there is a saved instance:

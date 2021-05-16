@@ -6,15 +6,20 @@ categories: OOP, Kotlin, exceptions
 --- 
 
 
-## LiveData is triggered as soon as you observe it.
+## Multi-threading and navigating back
 
-This is just a small note to remember: whenever a `LiveData` is start being observed it will notify immediately the observer. It looks pretty weird design decision to me because in the moment of assignment we know that the data hasn't changed and therefore there is
-no reason of being notified.
+Imagine that you are inside activity or fragment <b>'B'</b> where you need to store your data in the internal storage or database and go back to a previous fragment or activity <b>'A'</b>. Maybe your first though is, "I'll save my data on another thread and move back at the same time.". By doing this you are happily setting up a bomb with a random timer.
+
+The app runs well until one day you decide that when your data is saved in 'B' then when you navigate immediately to 'A' you would like to display it there. What's the problem?
+
+Well, what would happen if the data is still being saved when 'A' is already trying to access it? Yes the data would be the old one or non-existent. And even worse - you wouldn't notice that.
+
+A solution would be to always wait the thread to finish saving and display that to the user as a loading indicator.
 
 ## Views in fragments are not yet measured in onCreateView() and onViewCreated()
 
-Yes, it has been a tough one. I've had this bug where I was getting 0 for a view that has been using "match_parent" or "wrap_content"
-for width and height. It turns out that the layout is not measured yet even in `onViewCreated()`. The solution is to post the measurement like this:
+I've had this bug where a view was returning 0 for width and height when has using "match_parent" or "wrap_content" in its layout.
+It turns out that the layout is not yet being measured in `onViewCreated()`. The solution is to post the measurement like this:
 
 {% highlight kotlin %}
 override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -28,7 +33,7 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
 ## Justify your solutions
 
-It's my first time working with a team of more than two people, and I found myself in difficult situations where I can't explain why I have designed a specific part of the application as it is; consequently I felt frustrated.
+It's my second time working with a team of more than two people, and I found myself in difficult situations where I can't explain why I have designed a specific part of the application as it is; consequently I felt frustrated.
 
 Never the less, I've got something very important and interesting out of that experience: to always justify my decisions. It might sound like an overkill but I found out that it can actually reveal extremely bad design choices. Here is what you can try to improve your way of moving through the development process:
 
@@ -73,7 +78,7 @@ class ActivityB : AppCompatActivity() {
 }
 {% endhighlight %}
 
-With the addition of the code above we can now navigate flawlessly back to any fragment in Activity B but now can't move back to Activity B using the back button because myController doesn't remember where it came from. There are a few ways to overcome this problem: override `NavController.OnDestinationChangedListener` and navigate from there, or override `onOptionsItemSelected()` in your activity for every fragment.
+With the addition of the code above we can now navigate back to any fragment in Activity B but can't move back to Activity B using the back button because myController doesn't remember where it came from. There are a few ways to overcome this problem: override `NavController.OnDestinationChangedListener` and navigate from there, or override `onOptionsItemSelected()` in your activity for every fragment.
 
 ## FragmentStateAdapter is not updating the fragments when deleted.
 

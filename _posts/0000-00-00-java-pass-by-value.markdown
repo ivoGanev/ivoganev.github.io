@@ -1,3 +1,11 @@
+---
+layout: post
+title:  "Java pass by reference"
+date:   2021-05-13 12:25:08 +0000
+categories: OOP, Kotlin, exceptions
+published: false
+--- 
+
 The Java Spec says that everything in Java is pass-by-value. There is no such thing as "pass-by-reference" in Java.
 
 The key to understanding this is that something like

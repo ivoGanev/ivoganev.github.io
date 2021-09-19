@@ -1,10 +1,10 @@
 ---
 layout: post
 title:  "Java pass by reference"
-date:   2021-05-13 12:25:08 +0000
+date:   2021-01-14 12:25:08 +0000
 categories: OOP, Kotlin, exceptions
-published: false
---- 
+published: true
+---
 
 The Java Spec says that everything in Java is pass-by-value. There is no such thing as "pass-by-reference" in Java.
 
@@ -34,22 +34,22 @@ if the Method were defined as
 
 ``` java
 public void foo(Dog someDog) {
-    someDog.setName("Max");     // AAA
-    someDog = new Dog("Fifi");  // BBB
-    someDog.setName("Rowlf");   // CCC
+    someDog.setName("Max");     // 1
+    someDog = new Dog("Fifi");  // 2
+    someDog.setName("Rowlf");   // 3
 }
 ```
 
 let's look at what's happening.
 
 - the parameter `someDog` is set to the value 42
-- at line "AAA"
+- at line "1"
 - - `someDog` is followed to the `Dog` it points to (the `Dog` object at address 42)
 that Dog (the one at address 42) is asked to change his name to Max
-- at line "BBB"
+- at line "2"
 - - a `new Dog` is created. Let's say he's at address 74
 we assign the parameter someDog to 74
-- at line "CCC"
+- at line "3"
 - - someDog is followed to the `Dog` it points to (the `Dog` object at address 74)
 that `Dog` (the one at address 74) is asked to change his name to Rowlf
 then, we return

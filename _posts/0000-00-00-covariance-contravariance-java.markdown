@@ -4,7 +4,7 @@ title:  "Covariance and contravariance in Java"
 date:   2021-05-13 12:25:08 +0000
 categories: OOP, Kotlin, exceptions
 published: false
---- 
+---
 
 PECS (Producer extends and Consumer super)
 
@@ -24,9 +24,9 @@ class Super {
             return null;
         }
         void testContraVariance(Number parameter) {
-        } 
+        }
     }
-    
+
     class Sub extends Super {
         @Override
         Integer testCoVariance() {
@@ -36,6 +36,7 @@ class Super {
         void testContraVariance(Integer parameter) {
         } //doesn't support even though Integer is subtype of Number
     }
+}
 ```
 The Liskov Substitution Principle (LSP) states that “objects in a program should be replaceable with instances of their subtypes without altering the correctness of that program”.
 
@@ -64,14 +65,14 @@ List<Number> numbers = new ArrayList<Integer>();//gets compile time error
 
 Integer[] myInts = {1,2,3,4};
 Number[] myNumber = myInts;
-myNumber[0] = 3.14; //attempt of heap pollution i.e. at 
-// runtime gets java.lang.ArrayStoreException: 
+myNumber[0] = 3.14; //attempt of heap pollution i.e. at
+// runtime gets java.lang.ArrayStoreException:
 // java.lang.Double(we can fool compiler but not run-time)
 
 List<String> list=new ArrayList<>();
 list.add("prem");
 List<Object> listObject=list; //Type mismatch: cannot convert
-                              //from List<String> to List<Object> at Compiletime  
+                              //from List<String> to List<Object> at Compiletime
 ```
 
 
@@ -134,7 +135,7 @@ public class Test {
         List<? super Shape> shapes4 = new ArrayList<>();
         List<? super Circle> circles4 = shapes4; //OK.
     }
-    
+
     /*
      * Example for an upper bound wildcard (Get values i.e Producer `extends`)
      *
@@ -151,7 +152,7 @@ public class Test {
      * You can get an object and know that it will be an Shape
      */
     }
-    
+
     /*
      * Example for  a lower bound wildcard (Put values i.e Consumer`super`)
      * */
@@ -174,7 +175,7 @@ public class Test {
 
 generics and examples
 
-Covariance and contravariance determine compatibility based on types. In either case, variance is a directed relation. Covariance can be translated as "<b>different in the same direction</b>," or with-different, whereas contravariance means "<b>different in the opposite direction,</b>" or against-different. Covariant and contravariant types are not the same, but there is a correlation between them. The names imply the direction of the 
+Covariance and contravariance determine compatibility based on types. In either case, variance is a directed relation. Covariance can be translated as "<b>different in the same direction</b>," or with-different, whereas contravariance means "<b>different in the opposite direction,</b>" or against-different. Covariant and contravariant types are not the same, but there is a correlation between them. The names imply the direction of the
 
 - Covariance: accept subtypes (read only i.e. Producer)
 - Contravariance: accept supertypes (write only i.e. Consumer)

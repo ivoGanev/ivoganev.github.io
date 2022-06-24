@@ -24,7 +24,7 @@ email: ivo.ganev@yahoo.com
 description: >- # this means to ignore newlines until "baseurl:"
   I am Ivo Ganev and this is where I write for engineering and development in general.
 baseurl: "/" # the subpath of your site, e.g. /blog
-url: "https://ivoganev.com/" # the base hostname & protocol for your site, e.g. http://example.com
+url: "http://ivoganev.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
 # twitter_username: jekyllrb
 github_username:  ivoGanev
 
